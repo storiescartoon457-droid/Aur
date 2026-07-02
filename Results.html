@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Results</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;padding-bottom:70px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;height:60px;z-index:9999;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#666;cursor:pointer;font-size:9px;text-decoration:none;}
+.nb.on{color:#7C6DFF;}
+.nb span:first-child{font-size:22px;}
+.card{background:#111118;border:1px solid #222;border-radius:14px;padding:16px;margin:0 16px 12px;}
+.tab{padding:7px 16px;border-radius:100px;font-size:13px;font-weight:600;border:1px solid #333;color:#666;cursor:pointer;white-space:nowrap;background:#111118;text-decoration:none;}
+.tab.on{background:linear-gradient(135deg,#7C6DFF,#A855F7);color:white;border-color:transparent;}
+.sec{display:none;}
+.sec.on{display:block;}
+.row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #222;font-size:13px;}
+.row:last-child{border-bottom:none;}
+.bg{background:rgba(16,185,129,0.15);color:#10B981;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
+.bo{background:rgba(245,158,11,0.15);color:#F59E0B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
+.btn{display:block;width:calc(100% - 32px);margin:0 16px 12px;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;border-radius:12px;padding:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div style="padding:48px 16px 12px;background:linear-gradient(180deg,rgba(124,109,255,0.08),transparent)">
+<h2 style="font-size:24px;font-weight:700;margin-bottom:4px">Your Results</h2>
+<div id="resDate" style="font-size:12px;color:#666">No scan yet</div>
+</div>
+
+<div id="noScan" style="text-align:center;padding:60px 20px">
+<div style="font-size:48px;margin-bottom:12px">🔬</div>
+<div style="font-size:18px;font-weight:600;margin-bottom:8px">No Analysis Yet</div>
+<div style="font-size:13px;color:#666;margin-bottom:20px">Take your first AI scan to see your face and hair results here</div>
+<a href="scan.html" class="btn" style="width:auto;display:inline-block;padding:12px 24px">Start First Scan →</a>
+</div>
+
+<div id="hasResults" style="display:none">
+
+<div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:10px 14px;margin:0 16px 12px;font-size:11px;color:#F59E0B">
+⚠️ Scores are for entertainment and grooming guidance only. Beauty is subjective.
+</div>
+
+<div class="card" style="text-align:center">
+<div id="overallScore" style="font-size:42px;font-weight:700;color:#7C6DFF">83</div>
+<div style="font-size:13px;color:#666;margin-bottom:8px">Overall Score</div>
+<div style="margin-bottom:8px">
+<span class="bg" id="faceScoreBadge">Face: 82</span>
+<span style="display:inline-block;width:8px"></span>
+<span class="bg" id="hairScoreBadge">Hair: 85</span>
+</div>
+<div id="faceInfoLine" style="font-size:13px;color:#8E8DA8"></div>
+<div style="margin-top:10px;font-size:13px;color:#8E8DA8;line-height:1.5" id="scoreNote"></div>
+</div>
+
+<div style="display:flex;gap:8px;padding:0 16px;margin-bottom:12px;overflow-x:auto">
+<div class="tab on" onclick="showTab('face',this)">Face</div>
+<div class="tab" onclick="showTab('hair',this)">Hair</div>
+<div class="tab" onclick="showTab('routine',this)">Routine</div>
+<div class="tab" onclick="showTab('style',this)">Style</div>
+<div class="tab" onclick="showTab('diet',this)">Diet</div>
+</div>
+
+<div class="sec on" id="sec-face">
+<div class="card">
+<div style="font-weight:600;font-size:14px;margin-bottom:10px">Skin Concerns</div>
+<div id="concerns"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">💪 Strengths</div>
+<div id="strengths"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">🎯 Areas to Improve</div>
+<div id="improvements"></div>
+</div>
+</div>
+
+<div class="sec" id="sec-hair">
+<div class="card" id="hairDetails"></div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">💧 Weekly Hair Routine</div>
+<div id="hairRoutine"></div>
+</div>
+</div>
+
+<div class="sec" id="sec-routine">
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">☀️ Morning Skincare</div>
+<div id="morningRoutine"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">🌙 Night Skincare</div>
+<div id="nightRoutine"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">🌿 Home Remedies</div>
+<div id="homeRemedies"></div>
+</div>
+</div>
+
+<div class="sec" id="sec-style">
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">💈 Best Hairstyles for You</div>
+<div id="hairstyles"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">🧔 Beard Styles</div>
+<div id="beardStyles"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">🕶️ Glasses Frames</div>
+<div id="glassesFrames"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">⭐ Celebrity Matches</div>
+<div style="font-size:11px;color:#666;margin-bottom:8px">*Approximate matches for fun only</div>
+<div class="row"><span>🎬 Zayn Malik</span><span style="color:#666;font-size:12px">Bone structure</span></div>
+<div class="row"><span>🎬 Timothée Chalamet</span><span style="color:#666;font-size:12px">Face shape</span></div>
+<div class="row"><span>🎬 Noah Centineo</span><span style="color:#666;font-size:12px">Hair texture</span></div>
+</div>
+</div>
+
+<div class="sec" id="sec-diet">
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">🥗 Diet Recommendations</div>
+<div id="diet"></div>
+</div>
+<div class="card">
+<div style="font-weight:600;margin-bottom:8px">💤 Lifestyle Tips</div>
+<div class="row"><span>😴 Sleep</span><span style="color:#666;font-size:12px">7-8 hours before midnight</span></div>
+<div class="row"><span>💧 Water</span><span style="color:#666;font-size:12px">8 glasses daily</span></div>
+<div class="row"><span>☀️ Sun</span><span style="color:#666;font-size:12px">Avoid 12PM-3PM peak</span></div>
+<div class="row"><span>🏃 Exercise</span><span style="color:#666;font-size:12px">30 min daily boosts skin</span></div>
+</div>
+</div>
+
+</div>
+
+<div id="nav">
+<a class="nb" href="index.html"><span>🏠</span><span>Home</span></a>
+<a class="nb" href="scan.html"><span>📷</span><span>Scan</span></a>
+<a class="nb on" href="results.html"><span>📊</span><span>Results</span></a>
+<a class="nb" href="progress.html"><span>📈</span><span>Progress</span></a>
+<a class="nb" href="coach.html"><span>🤖</span><span>Coach</span></a>
+<a class="nb" href="profile.html"><span>👤</span><span>Profile</span></a>
+</div>
+
+<script>
+var r=JSON.parse(localStorage.getItem('auraResults')||'null');
+var date=localStorage.getItem('auraDate')||'';
+
+if(r){
+document.getElementById('noScan').style.display='none';
+document.getElementById('hasResults').style.display='block';
+document.getElementById('resDate').textContent='Analysed '+date;
+document.getElementById('overallScore').textContent=r.overallScore;
+document.getElementById('faceScoreBadge').textContent='Face: '+r.faceScore;
+document.getElementById('hairScoreBadge').textContent='Hair: '+r.hairScore;
+document.getElementById('faceInfoLine').textContent=r.faceShape+' face · '+r.skinType+' skin · Age: '+r.ageRange;
+document.getElementById('scoreNote').textContent=r.scoreNote;
+
+var c=document.getElementById('concerns');
+r.concerns.forEach(function(con){
+c.innerHTML+='<div class="row"><span style="font-weight:500">'+con.name+'</span><span class="'+(con.score<40?'bg':'bo')+'">'+con.severity+'</span></div>';
+});
+
+var s=document.getElementById('strengths');
+r.strengths.forEach(function(st){
+s.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>✅</span>'+st+'</div>';
+});
+
+var im=document.getElementById('improvements');
+r.improvements.forEach(function(i){
+im.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>→</span>'+i+'</div>';
+});
+
+document.getElementById('hairDetails').innerHTML=
+'<div class="row"><span style="font-weight:500">Hair Type</span><span class="bg">'+r.hairType+'</span></div>'+
+'<div class="row"><span style="font-weight:500">Hair Health</span><span class="bg">'+r.hairScore+'/100</span></div>'+
+'<div class="row"><span style="font-weight:500">Shine Level</span><span class="bg">'+r.hairShine+'</span></div>'+
+'<div class="row"><span style="font-weight:500">Frizz Level</span><span class="bg">'+r.frizzLevel+'</span></div>'+
+'<div class="row"><span style="font-weight:500">Split Ends</span><span class="bo">'+r.splitEnds+'</span></div>';
+
+var hr=document.getElementById('hairRoutine');
+r.hairRoutine.forEach(function(h){
+hr.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>💧</span>'+h+'</div>';
+});
+
+var mr=document.getElementById('morningRoutine');
+r.morningRoutine.forEach(function(m,i){
+mr.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>'+(i+1)+'.</span>'+m+'</div>';
+});
+
+var nr=document.getElementById('nightRoutine');
+r.nightRoutine.forEach(function(n,i){
+nr.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>'+(i+1)+'.</span>'+n+'</div>';
+});
+
+var hom=document.getElementById('homeRemedies');
+r.homeRemedies.forEach(function(h){
+hom.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>🌱</span>'+h+'</div>';
+});
+
+var hs=document.getElementById('hairstyles');
+r.hairstyles.forEach(function(h){
+hs.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>✓</span>'+h+'</div>';
+});
+
+var bs=document.getElementById('beardStyles');
+r.beardStyles.forEach(function(b){
+bs.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>✓</span>'+b+'</div>';
+});
+
+var gf=document.getElementById('glassesFrames');
+r.glassesFrames.forEach(function(g){
+gf.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>✓</span>'+g+'</div>';
+});
+
+var di=document.getElementById('diet');
+r.diet.forEach(function(d){
+di.innerHTML+='<div style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8"><span>✓</span>'+d+'</div>';
+});
+}
+
+function showTab(name,el){
+document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('on');});
+document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+document.getElementById('sec-'+name).classList.add('on');
+el.classList.add('on');
+}
+</script>
+</body>
+                                                                                                        </html>
