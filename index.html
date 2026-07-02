@@ -19,8 +19,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
 /* APP LAYOUT */
 #app{display:flex;flex-direction:column;height:100vh;height:100dvh;}
-#content{flex:1;overflow-y:auto;overflow-x:hidden;}
-#bottomNav{flex-shrink:0;background:rgba(17,17,24,0.98);border-top:1px solid var(--border2);display:flex;justify-content:space-around;align-items:center;padding:8px 0 12px;min-height:60px;}
+##content{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:65px;};}
+##bottomNav{position:fixed;bottom:0;left:0;right:0;background:rgba(17,17,24,0.98);border-top:1px solid var(--border2);display:flex;justify-content:space-around;align-items:center;padding:8px 0 12px;height:65px;z-index:999;} solid var(--border2);display:flex;justify-content:space-around;align-items:center;padding:8px 0 12px;min-height:60px;}
 
 /* BOTTOM NAV */
 .nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;opacity:0.4;transition:all 0.2s;padding:4px 12px;border:none;background:none;color:var(--text3);}
