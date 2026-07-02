@@ -2,301 +2,292 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AURA — AI Face & Hair Analysis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0A0A0F;color:#F0EFF8;}
-:root{
---bg:#0A0A0F;--surface:#111118;--surface2:#1A1A24;--surface3:#22222F;
---border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
---text:#F0EFF8;--text2:#8E8DA8;--text3:#5A5975;
---accent:#7C6DFF;--accent2:#A855F7;--accent3:#06B6D4;
---gold:#F59E0B;--rose:#FB7185;--green:#10B981;
---gradient:linear-gradient(135deg,#7C6DFF 0%,#A855F7 50%,#06B6D4 100%);
-}
-
-/* APP LAYOUT */
-#app{display:flex;flex-direction:column;height:100vh;height:100dvh;}
-##content{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:65px;};}
-##bottomNav{position:fixed;bottom:0;left:0;right:0;background:rgba(17,17,24,0.98);border-top:1px solid var(--border2);display:flex;justify-content:space-around;align-items:center;padding:8px 0 12px;height:65px;z-index:999;} solid var(--border2);display:flex;justify-content:space-around;align-items:center;padding:8px 0 12px;min-height:60px;}
-
-/* BOTTOM NAV */
-.nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;opacity:0.4;transition:all 0.2s;padding:4px 12px;border:none;background:none;color:var(--text3);}
-.nav-btn.active{opacity:1;color:var(--accent);}
-.nav-btn .ni{font-size:20px;}
-.nav-btn .nl{font-size:9px;font-weight:600;letter-spacing:0.5px;}
-
-/* SCREENS */
-.screen{display:none;padding-bottom:20px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,sans-serif;background:#0A0A0F;color:#F0EFF8;}
+#bottomNav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;justify-content:space-around;align-items:center;height:60px;z-index:9999;}
+.nb{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:0.4;border:none;background:none;color:#8E8DA8;padding:8px;}
+.nb.active{opacity:1;color:#7C6DFF;}
+.nb span:first-child{font-size:20px;}
+.nb span:last-child{font-size:9px;font-weight:600;}
+.screen{display:none;min-height:100vh;padding:50px 16px 80px;}
 .screen.active{display:block;}
-
-/* HOME */
-.home-top{background:linear-gradient(180deg,rgba(124,109,255,0.12) 0%,transparent 100%);padding:48px 20px 24px;}
-.home-top h1{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin-bottom:4px;}
-.home-top p{font-size:13px;color:var(--text3);}
-.score-card{background:var(--surface);border:1px solid var(--border2);border-radius:24px;padding:20px;margin:0 16px 16px;}
-.score-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
-.ring{width:80px;height:80px;border-radius:50%;background:conic-gradient(#7C6DFF 0% 82%,var(--surface3) 82% 100%);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;}
-.ring::after{content:'';position:absolute;inset:9px;border-radius:50%;background:var(--surface);}
-.ring-inner{position:relative;z-index:1;text-align:center;}
-.ring-inner .rn{font-size:20px;font-weight:700;}
-.ring-inner .rl{font-size:9px;color:var(--text3);}
-.score-info h3{font-size:16px;font-weight:700;margin-bottom:2px;}
-.score-info p{font-size:12px;color:var(--text3);}
-.badge{display:inline-block;background:rgba(16,185,129,0.15);color:var(--green);font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;margin-top:6px;}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.met-label{font-size:10px;color:var(--text3);margin-bottom:3px;}
-.met-bar{height:5px;background:var(--surface3);border-radius:3px;}
-.met-fill{height:100%;border-radius:3px;background:var(--gradient);}
-.met-val{font-size:11px;font-weight:600;color:var(--text2);text-align:right;margin-top:2px;}
-.scan-btn{display:block;width:calc(100% - 32px);margin:0 16px 16px;background:var(--gradient);border:none;border-radius:16px;padding:16px;text-align:center;font-size:16px;font-weight:700;color:white;cursor:pointer;}
-.scan-btn:active{opacity:0.85;}
-.qstats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px;margin-bottom:16px;}
-.qstat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;}
-.qstat-n{font-size:20px;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.qstat-l{font-size:10px;color:var(--text3);margin-top:2px;}
-.sec-title{font-size:15px;font-weight:700;padding:0 16px;margin-bottom:10px;}
-.chal-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px;margin:0 16px 16px;}
-.chal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.chal-title{font-size:14px;font-weight:600;}
-.streak{background:rgba(245,158,11,0.15);color:var(--gold);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;}
-.chal-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;}
-.chal-item:last-child{border-bottom:none;}
-.ccheck{width:24px;height:24px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;font-size:12px;}
-.ccheck.done{background:var(--green);border-color:var(--green);color:white;}
-.ctext{font-size:13px;color:var(--text2);}
-.ctext.done{text-decoration:line-through;color:var(--text3);}
-
-/* SCAN SCREEN */
-.scan-top{padding:48px 16px 16px;text-align:center;}
-.scan-top h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:6px;}
-.scan-top p{font-size:13px;color:var(--text3);}
-.cam-area{margin:0 16px;border-radius:20px;background:var(--surface);border:2px dashed var(--border2);min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden;}
-.face-oval{width:140px;height:180px;border-radius:70px;border:3px solid var(--accent);box-shadow:0 0 30px rgba(124,109,255,0.3);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;}
-.face-oval-icon{font-size:48px;}
-.face-oval-text{font-size:11px;color:var(--accent);font-weight:500;text-align:center;}
-#previewImg{width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;}
-.scan-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px;}
-.sopt{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:16px;text-align:center;cursor:pointer;transition:all 0.2s;}
-.sopt:active{border-color:var(--accent);background:rgba(124,109,255,0.08);}
-.sopt-icon{font-size:28px;margin-bottom:6px;}
-.sopt-label{font-size:13px;font-weight:600;margin-bottom:2px;}
-.sopt-sub{font-size:11px;color:var(--text3);}
-.analyze-btn{display:block;width:calc(100% - 32px);margin:0 16px 8px;background:var(--gradient);border:none;border-radius:16px;padding:16px;text-align:center;font-size:15px;font-weight:700;color:white;cursor:pointer;}
-.analyze-btn:active{opacity:0.85;}
-.analyze-btn:disabled{opacity:0.5;}
+h1{font-size:28px;font-weight:700;margin-bottom:16px;color:#F0EFF8;}
+h2{font-size:22px;font-weight:700;margin-bottom:12px;}
+.card{background:#111118;border:1px solid #222;border-radius:16px;padding:16px;margin-bottom:12px;}
+.btn{display:block;width:100%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;border-radius:12px;padding:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;text-align:center;}
+.ring{width:80px;height:80px;border-radius:50%;background:conic-gradient(#7C6DFF 0% 82%,#222 82%);display:flex;align-items:center;justify-content:center;position:relative;margin:0 auto 12px;}
+.ring::after{content:'';position:absolute;inset:10px;border-radius:50%;background:#111118;}
+.ring-txt{position:relative;z-index:1;text-align:center;font-size:18px;font-weight:700;}
+.met{margin-bottom:8px;}
+.met-l{font-size:11px;color:#5A5975;margin-bottom:3px;}
+.met-b{height:5px;background:#222;border-radius:3px;}
+.met-f{height:100%;border-radius:3px;background:linear-gradient(135deg,#7C6DFF,#06B6D4);}
+.met-v{font-size:11px;color:#8E8DA8;text-align:right;}
+.citem{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #222;cursor:pointer;}
+.citem:last-child{border-bottom:none;}
+.cbox{width:24px;height:24px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.cbox.done{background:#10B981;border-color:#10B981;color:white;}
+.ctxt{font-size:13px;color:#8E8DA8;}
+.ctxt.done{text-decoration:line-through;color:#5A5975;}
+.tab-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;}
+.tab{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:600;border:1px solid #333;color:#5A5975;cursor:pointer;white-space:nowrap;background:#111118;}
+.tab.active{background:linear-gradient(135deg,#7C6DFF,#A855F7);color:white;border-color:transparent;}
+.tsec{display:none;}
+.tsec.active{display:block;}
+.ritem{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8;}
+.ritem:last-child{border-bottom:none;}
+.badge-g{background:rgba(16,185,129,0.15);color:#10B981;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
+.badge-o{background:rgba(245,158,11,0.15);color:#F59E0B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
+.chat-msg{display:flex;gap:8px;margin-bottom:10px;}
+.chat-msg.user{flex-direction:row-reverse;}
+.chat-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.chat-av.me{background:#1A1A24;border:1px solid #333;}
+.chat-bub{max-width:78%;background:#1A1A24;border-radius:14px 14px 14px 4px;padding:10px 13px;font-size:13px;color:#8E8DA8;line-height:1.5;}
+.chat-msg.user .chat-bub{background:rgba(124,109,255,0.2);border-radius:14px 14px 4px 14px;color:#F0EFF8;}
+.qq-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;}
+.qq{background:#1A1A24;border:1px solid #333;border-radius:100px;padding:7px 14px;font-size:12px;color:#8E8DA8;white-space:nowrap;cursor:pointer;}
+.input-row{display:flex;gap:8px;}
+.cinput{flex:1;background:#1A1A24;border:1px solid #333;border-radius:100px;padding:10px 16px;color:#F0EFF8;font-size:13px;outline:none;}
+.csend{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;color:white;font-size:16px;cursor:pointer;}
+.bar{display:flex;align-items:flex-end;gap:6px;height:70px;margin-bottom:6px;}
+.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
+.bf{width:100%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7);}
+.bl{font-size:9px;color:#5A5975;}
+.mitem{display:flex;align-items:center;gap:12px;padding:14px;background:#111118;border:1px solid #222;border-radius:12px;margin-bottom:8px;cursor:pointer;}
+.micon{width:36px;height:36px;border-radius:10px;background:#1A1A24;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.mtext h4{font-size:14px;font-weight:500;}
+.mtext p{font-size:11px;color:#5A5975;}
 input[type=file]{display:none;}
-.loading-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,15,0.95);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
-.loading-overlay.show{display:flex;}
-.spinner{width:60px;height:60px;border-radius:50%;border:3px solid var(--border2);border-top-color:var(--accent);animation:spin 1s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.loading-text{font-size:16px;font-weight:600;color:var(--text);}
-.loading-sub{font-size:13px;color:var(--text3);text-align:center;padding:0 40px;}
-
-/* RESULTS SCREEN */
-.res-top{padding:48px 16px 16px;background:linear-gradient(180deg,rgba(124,109,255,0.08) 0%,transparent 100%);}
-.res-top h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:2px;}
-.res-date{font-size:12px;color:var(--text3);margin-bottom:12px;}
-.disclaimer{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:10px 14px;margin:0 16px 12px;font-size:11px;color:var(--gold);line-height:1.5;}
-.rtabs{display:flex;gap:8px;padding:0 16px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}
-.rtabs::-webkit-scrollbar{display:none;}
-.rtab{padding:8px 16px;border-radius:100px;font-size:13px;font-weight:600;border:1px solid var(--border2);color:var(--text3);cursor:pointer;white-space:nowrap;transition:all 0.2s;background:var(--surface);flex-shrink:0;}
-.rtab.active{background:var(--gradient);color:white;border-color:transparent;}
-.rsec{display:none;padding:0 16px;}
-.rsec.active{display:block;}
-.rcard{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:10px;}
-.rcard-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.rcard-title{font-size:14px;font-weight:600;}
-.rscore{font-size:12px;font-weight:700;padding:3px 10px;border-radius:100px;}
-.good{background:rgba(16,185,129,0.15);color:var(--green);}
-.ok{background:rgba(245,158,11,0.15);color:var(--gold);}
-.bad{background:rgba(251,113,133,0.15);color:var(--rose);}
-.rbar{height:5px;background:var(--surface3);border-radius:3px;margin-bottom:8px;}
-.rbar-fill{height:100%;border-radius:3px;}
-.rdesc{font-size:12px;color:var(--text3);line-height:1.5;}
-.rlist{list-style:none;}
-.rlist li{font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:flex-start;}
-.rlist li:last-child{border-bottom:none;}
-.empty-results{text-align:center;padding:60px 20px;}
-.empty-results .ei{font-size:48px;margin-bottom:16px;}
-.empty-results h3{font-size:18px;font-weight:600;margin-bottom:8px;}
-.empty-results p{font-size:13px;color:var(--text3);}
-.go-scan{display:inline-block;margin-top:16px;background:var(--gradient);color:white;border:none;border-radius:12px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;}
-
-/* PROGRESS */
-.prog-top{padding:48px 16px 16px;}
-.prog-top h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:4px;}
-.prog-top p{font-size:13px;color:var(--text3);}
-.pstats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px;margin-bottom:16px;}
-.pstat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;}
-.pstat-n{font-size:20px;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.pstat-l{font-size:10px;color:var(--text3);margin-top:3px;}
-.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px;margin:0 16px 14px;}
-.chart-title{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:14px;}
-.bars{display:flex;align-items:flex-end;gap:6px;height:70px;margin-bottom:6px;}
-.bar-w{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
-.bar-f{width:100%;border-radius:4px 4px 0 0;background:var(--gradient);min-height:4px;}
-.bar-l{font-size:9px;color:var(--text3);}
-.ba-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:18px;margin:0 16px 14px;}
-.ba-title{font-size:14px;font-weight:600;margin-bottom:12px;}
-.ba-row{display:flex;gap:12px;align-items:center;}
-.ba-item{flex:1;text-align:center;}
-.ba-box{background:var(--surface2);border-radius:12px;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:6px;}
-.ba-lbl{font-size:11px;color:var(--text3);}
-.ba-sc{font-size:16px;font-weight:700;color:var(--accent);}
-
-/* COACH */
-.coach-head{padding:48px 16px 12px;background:linear-gradient(180deg,rgba(124,109,255,0.08) 0%,transparent 100%);display:flex;align-items:center;gap:12px;}
-.coach-av{width:42px;height:42px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.coach-info h2{font-size:17px;font-weight:700;}
-.coach-status{font-size:11px;color:var(--green);}
-.chat-wrap{display:flex;flex-direction:column;}
-.chat-msgs{padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
-.cmsg{display:flex;gap:8px;}
-.cmsg.user{flex-direction:row-reverse;}
-.cav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
-.cav.ai{background:var(--gradient);}
-.cav.me{background:var(--surface2);border:1px solid var(--border2);}
-.cbub{max-width:78%;background:var(--surface2);border-radius:16px 16px 16px 4px;padding:10px 13px;font-size:13px;color:var(--text2);line-height:1.5;}
-.cmsg.user .cbub{background:rgba(124,109,255,0.18);border-radius:16px 16px 4px 16px;color:var(--text);}
-.quick-qs{display:flex;gap:8px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;}
-.quick-qs::-webkit-scrollbar{display:none;}
-.qq{background:var(--surface2);border:1px solid var(--border2);border-radius:100px;padding:7px 14px;font-size:12px;color:var(--text2);white-space:nowrap;cursor:pointer;flex-shrink:0;}
-.qq:active{background:rgba(124,109,255,0.15);border-color:var(--accent);}
-.chat-input-row{display:flex;gap:8px;padding:10px 16px;background:var(--surface);border-top:1px solid var(--border);}
-.cinput{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:100px;padding:10px 16px;color:var(--text);font-size:13px;outline:none;font-family:inherit;}
-.csend{width:38px;height:38px;border-radius:50%;background:var(--gradient);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-
-/* PROFILE */
-.prof-head{padding:48px 16px 24px;text-align:center;background:linear-gradient(180deg,rgba(124,109,255,0.1) 0%,transparent 100%);}
-.prof-av{width:72px;height:72px;border-radius:50%;margin:0 auto 10px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:32px;border:3px solid rgba(124,109,255,0.3);}
-.prof-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:4px;}
-.prof-plan{display:inline-block;background:rgba(124,109,255,0.15);color:var(--accent);font-size:12px;font-weight:600;padding:3px 12px;border-radius:100px;}
-.upgrade-card{margin:0 16px 16px;background:linear-gradient(135deg,rgba(124,109,255,0.15) 0%,rgba(168,85,247,0.15) 100%);border:1px solid rgba(124,109,255,0.3);border-radius:20px;padding:20px;text-align:center;}
-.upgrade-card h3{font-size:17px;font-weight:700;margin-bottom:6px;}
-.upgrade-card p{font-size:13px;color:var(--text2);margin-bottom:14px;}
-.upgrade-btn{background:var(--gradient);color:white;border:none;border-radius:12px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;width:100%;}
-.menu-sec{padding:0 16px;margin-bottom:16px;}
-.menu-sec-title{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--text3);margin-bottom:8px;}
-.mitem{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;}
-.mitem:active{background:var(--surface2);}
-.micon{font-size:18px;width:34px;height:34px;border-radius:10px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.mtext{flex:1;}
-.mtitle{font-size:14px;font-weight:500;}
-.msub{font-size:11px;color:var(--text3);margin-top:1px;}
-.marrow{color:var(--text3);font-size:18px;}
+.cam-box{background:#111118;border:2px dashed #333;border-radius:16px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;position:relative;overflow:hidden;}
+#prevImg{width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;border-radius:14px;}
+.oval{width:120px;height:160px;border-radius:60px;border:3px solid #7C6DFF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;}
+.loader{display:none;position:fixed;inset:0;background:rgba(10,10,15,0.95);z-index:99999;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.loader.show{display:flex;}
+.spin{width:50px;height:50px;border-radius:50%;border:3px solid #333;border-top-color:#7C6DFF;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.disclaimer{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:10px;font-size:11px;color:#F59E0B;margin-bottom:12px;}
 </style>
 </head>
 <body>
 
-<div id="app">
-<div id="content">
-
 <!-- HOME -->
 <div class="screen active" id="s-home">
-<div class="home-top">
-<p>Good morning ☀️</p>
-<h1>AURA</h1>
+<h1>AURA ✦</h1>
+<p style="color:#5A5975;margin-bottom:16px">Good morning ☀️</p>
+<div class="card">
+<div class="ring"><div class="ring-txt">82<br><span style="font-size:10px;color:#5A5975">/100</span></div></div>
+<div style="text-align:center;margin-bottom:16px">
+<div style="font-size:16px;font-weight:700">Overall Score</div>
+<div style="font-size:12px;color:#5A5975">Last scan: Today</div>
+<span class="badge-g">↑4 this week</span>
 </div>
-<div class="score-card">
-<div class="score-row">
-<div class="ring"><div class="ring-inner"><div class="rn">82</div><div class="rl">/100</div></div></div>
-<div class="score-info">
-<h3>Overall Score</h3>
-<p>Last scan: Today</p>
-<div class="badge">↑4 this week</div>
+<div class="met"><div class="met-l">Skin Clarity</div><div class="met-b"><div class="met-f" style="width:78%"></div></div><div class="met-v">78</div></div>
+<div class="met"><div class="met-l">Hair Health</div><div class="met-b"><div class="met-f" style="width:85%"></div></div><div class="met-v">85</div></div>
+<div class="met"><div class="met-l">Symmetry</div><div class="met-b"><div class="met-f" style="width:88%"></div></div><div class="met-v">88</div></div>
+<div class="met"><div class="met-l">Grooming</div><div class="met-b"><div class="met-f" style="width:74%"></div></div><div class="met-v">74</div></div>
 </div>
+<button class="btn" onclick="go('scan')">✦ Start New AI Scan</button>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">7</div><div style="font-size:10px;color:#5A5975">Total Scans</div></div>
+<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">🔥14</div><div style="font-size:10px;color:#5A5975">Day Streak</div></div>
+<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">+12</div><div style="font-size:10px;color:#5A5975">Skin Pts</div></div>
 </div>
-<div class="metrics">
-<div><div class="met-label">Skin Clarity</div><div class="met-bar"><div class="met-fill" style="width:78%"></div></div><div class="met-val">78</div></div>
-<div><div class="met-label">Hair Health</div><div class="met-bar"><div class="met-fill" style="width:85%"></div></div><div class="met-val">85</div></div>
-<div><div class="met-label">Symmetry</div><div class="met-bar"><div class="met-fill" style="width:88%"></div></div><div class="met-val">88</div></div>
-<div><div class="met-label">Grooming</div><div class="met-bar"><div class="met-fill" style="width:74%"></div></div><div class="met-val">74</div></div>
-</div>
-</div>
-<button class="scan-btn" onclick="goScan()">✦ Start New AI Scan</button>
-<div class="qstats">
-<div class="qstat"><div class="qstat-n">7</div><div class="qstat-l">Total Scans</div></div>
-<div class="qstat"><div class="qstat-n">🔥14</div><div class="qstat-l">Day Streak</div></div>
-<div class="qstat"><div class="qstat-n">+12</div><div class="qstat-l">Skin Pts</div></div>
-</div>
-<div class="sec-title">Daily Challenges</div>
-<div class="chal-card">
-<div class="chal-head"><div class="chal-title">Today's Goals</div><div class="streak">🔥 14 days</div></div>
-<div class="chal-item" onclick="toggleC(this)"><div class="ccheck done">✓</div><div class="ctext done">Drink 8 glasses of water</div></div>
-<div class="chal-item" onclick="toggleC(this)"><div class="ccheck"></div><div class="ctext">Apply morning skincare routine</div></div>
-<div class="chal-item" onclick="toggleC(this)"><div class="ccheck"></div><div class="ctext">Use SPF 50 sunscreen</div></div>
-<div class="chal-item" onclick="toggleC(this)"><div class="ccheck"></div><div class="ctext">Sleep before 11 PM</div></div>
-<div class="chal-item" onclick="toggleC(this)"><div class="ccheck"></div><div class="ctext">Oil hair for 30 minutes</div></div>
+<div style="font-size:15px;font-weight:700;margin-bottom:10px">Daily Challenges</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font-weight:600">Today's Goals</span><span class="badge-o">🔥 14 days</span></div>
+<div class="citem" onclick="tc(this)"><div class="cbox done">✓</div><div class="ctxt done">Drink 8 glasses of water</div></div>
+<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Apply morning skincare routine</div></div>
+<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Use SPF 50 sunscreen</div></div>
+<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Sleep before 11 PM</div></div>
+<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Oil hair for 30 minutes</div></div>
 </div>
 </div>
 
 <!-- SCAN -->
 <div class="screen" id="s-scan">
-<div class="scan-top">
 <h2>AI Face Scan</h2>
-<p>Take or upload a clear face photo</p>
+<p style="color:#5A5975;margin-bottom:16px">Take or upload a clear face photo</p>
+<div class="cam-box" id="camBox">
+<img id="prevImg" alt="preview">
+<div class="oval" id="oval"><div style="font-size:40px">👤</div><div style="font-size:11px;color:#7C6DFF;text-align:center">Tap below<br>to add photo</div></div>
 </div>
-<div class="cam-area" id="camArea">
-<img id="previewImg" alt="preview">
-<div id="faceOval" class="face-oval">
-<div class="face-oval-icon">👤</div>
-<div class="face-oval-text">Tap below to<br>take photo</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+<div class="card" style="text-align:center;cursor:pointer" onclick="document.getElementById('ci').click()">
+<div style="font-size:28px">📷</div><div style="font-weight:600;margin:4px 0">Take Photo</div><div style="font-size:11px;color:#5A5975">Open camera</div>
 </div>
-</div>
-<div class="scan-opts">
-<div class="sopt" onclick="document.getElementById('camInput').click()">
-<div class="sopt-icon">📷</div>
-<div class="sopt-label">Take Photo</div>
-<div class="sopt-sub">Open camera</div>
-</div>
-<div class="sopt" onclick="document.getElementById('galInput').click()">
-<div class="sopt-icon">🖼️</div>
-<div class="sopt-label">From Gallery</div>
-<div class="sopt-sub">Upload photo</div>
+<div class="card" style="text-align:center;cursor:pointer" onclick="document.getElementById('gi').click()">
+<div style="font-size:28px">🖼️</div><div style="font-weight:600;margin:4px 0">From Gallery</div><div style="font-size:11px;color:#5A5975">Upload photo</div>
 </div>
 </div>
-<input type="file" id="camInput" accept="image/*" capture="user" onchange="previewPhoto(this)">
-<input type="file" id="galInput" accept="image/*" onchange="previewPhoto(this)">
-<button class="analyze-btn" id="analyzeBtn" onclick="runAnalysis()" disabled>Select a photo first</button>
+<input type="file" id="ci" accept="image/*" capture="user" onchange="prev(this)">
+<input type="file" id="gi" accept="image/*" onchange="prev(this)">
+<button class="btn" id="abtn" onclick="analyse()" style="opacity:0.5" disabled>Select a photo first</button>
 </div>
 
 <!-- RESULTS -->
 <div class="screen" id="s-results">
-<div class="res-top">
 <h2>Your Results</h2>
-<div class="res-date" id="resDate">No scan yet</div>
-</div>
-<div id="resultsContent">
-<div class="empty-results">
-<div class="ei">🔬</div>
-<h3>No Analysis Yet</h3>
-<p>Take your first AI scan to see your face and hair analysis results here.</p>
-<button class="go-scan" onclick="goScan()">Start First Scan →</button>
+<div id="resDate" style="font-size:12px;color:#5A5975;margin-bottom:12px">No scan yet</div>
+<div id="resContent">
+<div style="text-align:center;padding:40px 20px">
+<div style="font-size:48px;margin-bottom:12px">🔬</div>
+<div style="font-size:18px;font-weight:600;margin-bottom:8px">No Analysis Yet</div>
+<div style="font-size:13px;color:#5A5975;margin-bottom:16px">Take your first AI scan to see results</div>
+<button class="btn" onclick="go('scan')" style="width:auto;padding:12px 24px;display:inline-block">Start First Scan →</button>
 </div>
 </div>
 </div>
 
 <!-- PROGRESS -->
 <div class="screen" id="s-progress">
-<div class="prog-top">
 <h2>Your Progress</h2>
-<p>Tracking your improvement</p>
+<p style="color:#5A5975;margin-bottom:16px">Tracking your improvement</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
+<div class="card" style="text-align:center"><div style="font-size:20px;font-weight:700;color:#7C6DFF">7</div><div style="font-size:10px;color:#5A5975">Scans Done</div></div>
+<div class="card" style="text-align:center"><div style="font-size:20px;font-weight:700;color:#7C6DFF">🔥14</div><div style="font-size:10px;color:#5A5975">Day Streak</div></div>
+<div class="card" style="text-align:center"><div style="font-size:20px;font-weight:700;color:#7C6DFF">+12</div><div style="font-size:10px;color:#5A5975">Skin Score</div></div>
 </div>
-<div class="pstats">
-<div class="pstat"><div class="pstat-n" id="totalScans">0</div><div class="pstat-l">Scans Done</div></div>
-<div class="pstat"><div class="pstat-n">🔥14</div><div class="pstat-l">Day Streak</div></div>
-<div class="pstat"><div class="pstat-n" id="skinGain">+0</div><div class="pstat-l">Skin Score</div></div>
+<div class="card">
+<div style="font-size:13px;font-weight:600;color:#8E8DA8;margin-bottom:12px">Skin Score History</div>
+<div class="bar">
+<div class="bw"><div class="bf" style="height:55%"></div><div class="bl">W1</div></div>
+<div class="bw"><div class="bf" style="height:60%"></div><div class="bl">W2</div></div>
+<div class="bw"><div class="bf" style="height:65%"></div><div class="bl">W3</div></div>
+<div class="bw"><div class="bf" style="height:70%"></div><div class="bl">W4</div></div>
+<div class="bw"><div class="bf" style="height:74%"></div><div class="bl">W5</div></div>
+<div class="bw"><div class="bf" style="height:76%"></div><div class="bl">W6</div></div>
+<div class="bw"><div class="bf" style="height:78%"></div><div class="bl">Now</div></div>
 </div>
-<div class="chart-card">
-<div class="chart-title">Skin Score History</div>
-<div class="bars" id="skinChart">
-<div class="bar-w"><div class="bar-f" style="height:55%"></div><div class="bar-l">W1</div></div>
-<div class="bar-w"><div class="bar-f" style="height:60%"></div><div class="bar-l">W2</div></div>
-<div class="bar-w"><div class="bar-f" style="height:65%"></div><div class="bar-l">W3</div></div>
-<div class="bar-w"><div class="bar-f" style="height:70%"></div><div class="bar-l">W4</div></div>
-<div class="bar-w"><div class="bar-f" style="height:74%"></div><div class="bar-l">W5</div></div>
-<div class="bar-w"><div class="bar-f" style="height:76%"></div><div class="bar-l">W6</div></div>
-<div class="bar-w"><div class="bar-f" style="height:78%"></div><div clas
+</div>
+<div class="card">
+<div style="font-size:13px;font-weight:600;color:#8E8DA8;margin-bottom:12px">Hair Score History</div>
+<div class="bar">
+<div class="bw"><div class="bf" style="height:70%;background:#06B6D4"></div><div class="bl">W1</div></div>
+<div class="bw"><div class="bf" style="height:73%;background:#06B6D4"></div><div class="bl">W2</div></div>
+<div class="bw"><div class="bf" style="height:76%;background:#06B6D4"></div><div class="bl">W3</div></div>
+<div class="bw"><div class="bf" style="height:79%;background:#06B6D4"></div><div class="bl">W4</div></div>
+<div class="bw"><div class="bf" style="height:81%;background:#06B6D4"></div><div class="bl">W5</div></div>
+<div class="bw"><div class="bf" style="height:83%;background:#06B6D4"></div><div class="bl">W6</div></div>
+<div class="bw"><div class="bf" style="height:85%;background:#06B6D4"></div><div class="bl">Now</div></div>
+</div>
+</div>
+<div class="card">
+<div style="font-size:14px;font-weight:600;margin-bottom:12px">Before & After</div>
+<div style="display:flex;gap:12px;align-items:center">
+<div style="flex:1;text-align:center"><div style="background:#1A1A24;border-radius:10px;padding:20px;font-size:28px;margin-bottom:6px">📸</div><div style="font-size:11px;color:#5A5975">Week 1</div><div style="font-size:16px;font-weight:700;color:#7C6DFF">70</div></div>
+<div style="font-size:24px;color:#333">→</div>
+<div style="flex:1;text-align:center"><div style="background:#1A1A24;border-radius:10px;padding:20px;font-size:28px;margin-bottom:6px">🤩</div><div style="font-size:11px;color:#5A5975">Now</div><div style="font-size:16px;font-weight:700;color:#10B981">82</div></div>
+</div>
+</div>
+</div>
+
+<!-- COACH -->
+<div class="screen" id="s-coach">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+<div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:18px">✦</div>
+<div><div style="font-size:17px;font-weight:700">AURA Coach</div><div style="font-size:11px;color:#10B981">● Online · AI Powered</div></div>
+</div>
+<div id="chatMsgs" style="margin-bottom:12px">
+<div class="chat-msg"><div class="chat-av">✦</div><div class="chat-bub">Hi! I am your AURA Coach. Ask me anything about skincare, haircare, or grooming!</div></div>
+</div>
+<div class="qq-row">
+<div class="qq" onclick="aq(this)">Why is my hair falling?</div>
+<div class="qq" onclick="aq(this)">Best products for me?</div>
+<div class="qq" onclick="aq(this)">Remove dark circles?</div>
+<div class="qq" onclick="aq(this)">What hairstyle suits me?</div>
+<div class="qq" onclick="aq(this)">Morning routine?</div>
+</div>
+<div class="input-row">
+<input class="cinput" id="cinp" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sm()">
+<button class="csend" onclick="sm()">↑</button>
+</div>
+</div>
+
+<!-- PROFILE -->
+<div class="screen" id="s-profile">
+<div style="text-align:center;margin-bottom:20px">
+<div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:30px">👤</div>
+<div style="font-size:20px;font-weight:700;margin-bottom:4px">Your Profile</div>
+<span class="badge-g">Free Plan</span>
+</div>
+<div class="card" style="text-align:center;background:linear-gradient(135deg,rgba(124,109,255,0.15),rgba(168,85,247,0.15));border-color:rgba(124,109,255,0.3)">
+<div style="font-size:17px;font-weight:700;margin-bottom:6px">✨ Upgrade to Pro</div>
+<div style="font-size:13px;color:#8E8DA8;margin-bottom:14px">Unlimited scans, PDF reports, celebrity matches</div>
+<button class="btn" style="margin:0">Get Pro — $9.99/month</button>
+</div>
+<div class="mitem"><div class="micon">👤</div><div class="mtext"><h4>Edit Profile</h4><p>Name and preferences</p></div><span style="color:#333;font-size:18px">›</span></div>
+<div class="mitem"><div class="micon">🔔</div><div class="mtext"><h4>Notifications</h4><p>Reminders and alerts</p></div><span style="color:#333;font-size:18px">›</span></div>
+<div class="mitem"><div class="micon">🔒</div><div class="mtext"><h4>Privacy</h4><p>Data and permissions</p></div><span style="color:#333;font-size:18px">›</span></div>
+<div class="mitem"><div class="micon">📊</div><div class="mtext"><h4>Scan History</h4><p>All previous analyses</p></div><span style="color:#333;font-size:18px">›</span></div>
+<div class="mitem"><div class="micon">⭐</div><div class="mtext"><h4>Rate AURA</h4><p>Leave a review</p></div><span style="color:#333;font-size:18px">›</span></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div id="bottomNav">
+<button class="nb active" id="nb-home" onclick="go('home')"><span>🏠</span><span>Home</span></button>
+<button class="nb" id="nb-scan" onclick="go('scan')"><span>📷</span><span>Scan</span></button>
+<button class="nb" id="nb-results" onclick="go('results')"><span>📊</span><span>Results</span></button>
+<button class="nb" id="nb-progress" onclick="go('progress')"><span>📈</span><span>Progress</span></button>
+<button class="nb" id="nb-coach" onclick="go('coach')"><span>🤖</span><span>Coach</span></button>
+<button class="nb" id="nb-profile" onclick="go('profile')"><span>👤</span><span>Profile</span></button>
+</div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+<div class="spin"></div>
+<div style="font-size:16px;font-weight:600" id="ltxt">Analysing your photo...</div>
+<div style="font-size:13px;color:#5A5975;text-align:center;padding:0 40px">Please wait about 15 seconds</div>
+</div>
+
+<script>
+function go(name){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+document.getElementById('s-'+name).classList.add('active');
+document.getElementById('nb-'+name).classList.add('active');
+window.scrollTo(0,0);
+}
+
+function tc(item){
+const b=item.querySelector('.cbox');
+const t=item.querySelector('.ctxt');
+b.classList.toggle('done');
+t.classList.toggle('done');
+b.textContent=b.classList.contains('done')?'✓':'';
+}
+
+let b64='';
+function prev(input){
+const file=input.files[0];
+if(!file)return;
+const reader=new FileReader();
+reader.onload=function(e){
+b64=e.target.result.split(',')[1];
+const img=document.getElementById('prevImg');
+img.src=e.target.result;
+img.style.display='block';
+document.getElementById('oval').style.display='none';
+const btn=document.getElementById('abtn');
+btn.disabled=false;
+btn.style.opacity='1';
+btn.textContent='✦ Analyse My Face & Hair Now';
+};
+reader.readAsDataURL(file);
+}
+
+async function analyse(){
+if(!b64){alert('Please select a photo first');return;}
+document.getElementById('loader').classList.add('show');
+try{
+const res=await fetch('https://api.anthropic.com/v1/messages',{
+method:'POST',
+headers:{'Content-Type':'application/json','x-api-key':'YOUR_API_KEY_HERE','anthropic-version':'2023-06-01'},
+body:JSON.stringify({
+model:'claude-sonnet-4-6',
+max_tokens:1500,
+messages:[{role:'user',content:[
+{type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
+{type:'text',text:'You are AURA AI. Analyse this face and hair photo. Reply ONLY with valid JSON, no extra text:\n{"faceScore":82,"hairScore":85,"overallScore":83,"faceShape":"Oval","skinType":"Combination","ageRange":"22-26","concerns":[{"name":"Dark Circles","severity":"Mild","score":40}],"hairType":"Straight","hairHealth":"Good","hairShine":"High","frizzLevel":"Low","splitEnds":"Minor","strengths":["Good symmetry","Healthy hair"],"improvements":["Use SPF daily","Add eye cream"],"morningRoutine":["Cleanser","Vitamin C","SPF 50"],"nightRoutine":["Cleanser","Niacinamide","Moisturiser"],"hairstyles":["Wolf cut","Curtain bangs"],"beardStyles":["Short stubble","Full beard"],"
