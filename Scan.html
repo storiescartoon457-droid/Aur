@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Scan</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;padding-bottom:70px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;height:60px;z-index:9999;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#666;cursor:pointer;font-size:9px;text-decoration:none;}
+.nb.on{color:#7C6DFF;}
+.nb span:first-child{font-size:22px;}
+.card{background:#111118;border:1px solid #222;border-radius:14px;padding:16px;margin:0 16px 12px;}
+.btn{display:block;width:calc(100% - 32px);margin:0 16px 12px;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;border-radius:12px;padding:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;text-align:center;}
+.btn:disabled{opacity:0.5;}
+input[type=file]{display:none;}
+.loader{display:none;position:fixed;inset:0;background:rgba(10,10,15,0.95);z-index:99999;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.loader.show{display:flex;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{width:50px;height:50px;border-radius:50%;border:3px solid #333;border-top-color:#7C6DFF;animation:spin 1s linear infinite;}
+</style>
+</head>
+<body>
+
+<div style="padding:48px 16px 16px;text-align:center">
+<h2 style="font-size:24px;font-weight:700;margin-bottom:6px">AI Face Scan</h2>
+<p style="color:#666;font-size:13px">Take or upload a clear face photo</p>
+</div>
+
+<div style="margin:0 16px 12px;background:#111118;border:2px dashed #333;border-radius:16px;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden">
+<img id="prevImg" style="display:none;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:14px">
+<div id="oval" style="width:130px;height:170px;border-radius:65px;border:3px solid #7C6DFF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;box-shadow:0 0 20px rgba(124,109,255,0.3)">
+<div style="font-size:44px">👤</div>
+<div style="font-size:11px;color:#7C6DFF;text-align:center">Tap below<br>to add photo</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px;margin-bottom:12px">
+<div class="card" style="margin:0;text-align:center;cursor:pointer" onclick="document.getElementById('ci').click()">
+<div style="font-size:32px;margin-bottom:6px">📷</div>
+<div style="font-weight:600;font-size:14px;margin-bottom:2px">Take Photo</div>
+<div style="font-size:11px;color:#666">Open camera</div>
+</div>
+<div class="card" style="margin:0;text-align:center;cursor:pointer" onclick="document.getElementById('gi').click()">
+<div style="font-size:32px;margin-bottom:6px">🖼️</div>
+<div style="font-weight:600;font-size:14px;margin-bottom:2px">From Gallery</div>
+<div style="font-size:11px;color:#666">Upload photo</div>
+</div>
+</div>
+
+<input type="file" id="ci" accept="image/*" capture="user" onchange="prev(this)">
+<input type="file" id="gi" accept="image/*" onchange="prev(this)">
+
+<button class="btn" id="abtn" onclick="analyse()" disabled>Select a photo first</button>
+
+<div style="text-align:center;font-size:11px;color:#666;padding:0 16px">
+Your photo is processed privately and never shared
+</div>
+
+<div id="nav">
+<a class="nb" href="index.html"><span>🏠</span><span>Home</span></a>
+<a class="nb on" href="scan.html"><span>📷</span><span>Scan</span></a>
+<a class="nb" href="results.html"><span>📊</span><span>Results</span></a>
+<a class="nb" href="progress.html"><span>📈</span><span>Progress</span></a>
+<a class="nb" href="coach.html"><span>🤖</span><span>Coach</span></a>
+<a class="nb" href="profile.html"><span>👤</span><span>Profile</span></a>
+</div>
+
+<div class="loader" id="loader">
+<div class="spin"></div>
+<div style="font-size:16px;font-weight:600">Analysing your photo...</div>
+<div style="font-size:13px;color:#666;text-align:center;padding:0 40px">AI is examining your face and hair. Please wait...</div>
+</div>
+
+<script>
+var b64='';
+
+function prev(input){
+var file=input.files[0];
+if(!file)return;
+var reader=new FileReader();
+reader.onload=function(e){
+b64=e.target.result.split(',')[1];
+var img=document.getElementById('prevImg');
+img.src=e.target.result;
+img.style.display='block';
+document.getElementById('oval').style.display='none';
+var btn=document.getElementById('abtn');
+btn.disabled=false;
+btn.textContent='✦ Analyse My Face & Hair Now';
+};
+reader.readAsDataURL(file);
+}
+
+function analyse(){
+if(!b64){alert('Please select a photo first');return;}
+document.getElementById('loader').classList.add('show');
+setTimeout(function(){
+var results={
+faceScore:82,
+hairScore:85,
+overallScore:83,
+faceShape:'Oval',
+skinType:'Combination',
+ageRange:'22-26',
+concerns:[
+{name:'Dark Circles',severity:'Mild',score:40},
+{name:'Pigmentation',severity:'Light',score:25},
+{name:'Acne',severity:'Clear',score:8}
+],
+hairType:'Straight',
+hairHealth:'Good',
+hairShine:'High',
+frizzLevel:'Low',
+splitEnds:'Minor',
+strengths:[
+'Excellent facial symmetry',
+'Clear skin with no active acne',
+'Healthy hair with natural shine',
+'Well defined beard line'
+],
+improvements:[
+'Use SPF 50 daily for pigmentation',
+'Add caffeine eye cream for dark circles',
+'Drink more water daily',
+'Add argan oil to hair tips'
+],
+morningRoutine:[
+'Gentle gel cleanser',
+'Vitamin C serum',
+'Lightweight moisturiser',
+'SPF 50 sunscreen'
+],
+nightRoutine:[
+'Micellar water cleanser',
+'Niacinamide serum',
+'Retinol eye cream',
+'Heavy moisturiser'
+],
+hairRoutine:[
+'Monday: Sulfate-free shampoo',
+'Wednesday: Deep conditioning mask',
+'Friday: Argan oil on tips',
+'Sunday: Scalp massage with coconut oil'
+],
+hairstyles:[
+'Wolf cut with curtain bangs',
+'Textured fringe with layers',
+'Side part with volume',
+'Classic crew cut'
+],
+beardStyles:[
+'Short stubble',
+'Extended goatee',
+'Full medium beard'
+],
+glassesFrames:[
+'Aviator frames',
+'Round frames',
+'Square frames'
+],
+diet:[
+'Drink 8 glasses of water daily',
+'Sleep 7-8 hours before midnight',
+'Add zinc and biotin rich foods',
+'Avoid sugar and junk food'
+],
+homeRemedies:[
+'Aloe vera gel for dark circles',
+'Turmeric mask for pigmentation',
+'Onion juice for hair growth',
+'Green tea toner for oily skin'
+],
+scoreNote:'Your face shows excellent symmetry and good overall health. Main areas to improve are dark circles and mild pigmentation.'
+};
+localStorage.setItem('auraResults',JSON.stringify(results));
+localStorage.setItem('auraDate',new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}));
+document.getElementById('loader').classList.remove('show');
+window.location.href='results.html';
+},3000);
+}
+</script>
+</body>
+  </html>
