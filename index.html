@@ -1,276 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AURA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Arial,sans-serif;background:#0A0A0F;color:#F0EFF8;}
-#bottomNav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;justify-content:space-around;align-items:center;height:60px;z-index:9999;}
-.nb{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:0.4;border:none;background:none;color:#8E8DA8;padding:8px;}
-.nb.active{opacity:1;color:#7C6DFF;}
-.nb span:first-child{font-size:20px;}
-.nb span:last-child{font-size:9px;font-weight:600;}
-.screen{display:none;min-height:100vh;padding:50px 16px 80px;}
+body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;}
+.screen{display:none;padding:50px 16px 80px;}
 .screen.active{display:block;}
-h1{font-size:28px;font-weight:700;margin-bottom:16px;color:#F0EFF8;}
-h2{font-size:22px;font-weight:700;margin-bottom:12px;}
-.card{background:#111118;border:1px solid #222;border-radius:16px;padding:16px;margin-bottom:12px;}
-.btn{display:block;width:100%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;border-radius:12px;padding:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;text-align:center;}
-.ring{width:80px;height:80px;border-radius:50%;background:conic-gradient(#7C6DFF 0% 82%,#222 82%);display:flex;align-items:center;justify-content:center;position:relative;margin:0 auto 12px;}
-.ring::after{content:'';position:absolute;inset:10px;border-radius:50%;background:#111118;}
-.ring-txt{position:relative;z-index:1;text-align:center;font-size:18px;font-weight:700;}
-.met{margin-bottom:8px;}
-.met-l{font-size:11px;color:#5A5975;margin-bottom:3px;}
-.met-b{height:5px;background:#222;border-radius:3px;}
-.met-f{height:100%;border-radius:3px;background:linear-gradient(135deg,#7C6DFF,#06B6D4);}
-.met-v{font-size:11px;color:#8E8DA8;text-align:right;}
-.citem{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #222;cursor:pointer;}
-.citem:last-child{border-bottom:none;}
-.cbox{width:24px;height:24px;border-radius:50%;border:2px solid #333;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
-.cbox.done{background:#10B981;border-color:#10B981;color:white;}
-.ctxt{font-size:13px;color:#8E8DA8;}
-.ctxt.done{text-decoration:line-through;color:#5A5975;}
-.tab-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;}
-.tab{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:600;border:1px solid #333;color:#5A5975;cursor:pointer;white-space:nowrap;background:#111118;}
-.tab.active{background:linear-gradient(135deg,#7C6DFF,#A855F7);color:white;border-color:transparent;}
-.tsec{display:none;}
-.tsec.active{display:block;}
-.ritem{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #222;font-size:13px;color:#8E8DA8;}
-.ritem:last-child{border-bottom:none;}
-.badge-g{background:rgba(16,185,129,0.15);color:#10B981;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
-.badge-o{background:rgba(245,158,11,0.15);color:#F59E0B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;}
-.chat-msg{display:flex;gap:8px;margin-bottom:10px;}
-.chat-msg.user{flex-direction:row-reverse;}
-.chat-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
-.chat-av.me{background:#1A1A24;border:1px solid #333;}
-.chat-bub{max-width:78%;background:#1A1A24;border-radius:14px 14px 14px 4px;padding:10px 13px;font-size:13px;color:#8E8DA8;line-height:1.5;}
-.chat-msg.user .chat-bub{background:rgba(124,109,255,0.2);border-radius:14px 14px 4px 14px;color:#F0EFF8;}
-.qq-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:8px;}
-.qq{background:#1A1A24;border:1px solid #333;border-radius:100px;padding:7px 14px;font-size:12px;color:#8E8DA8;white-space:nowrap;cursor:pointer;}
-.input-row{display:flex;gap:8px;}
-.cinput{flex:1;background:#1A1A24;border:1px solid #333;border-radius:100px;padding:10px 16px;color:#F0EFF8;font-size:13px;outline:none;}
-.csend{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;color:white;font-size:16px;cursor:pointer;}
-.bar{display:flex;align-items:flex-end;gap:6px;height:70px;margin-bottom:6px;}
-.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;}
-.bf{width:100%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7);}
-.bl{font-size:9px;color:#5A5975;}
-.mitem{display:flex;align-items:center;gap:12px;padding:14px;background:#111118;border:1px solid #222;border-radius:12px;margin-bottom:8px;cursor:pointer;}
-.micon{width:36px;height:36px;border-radius:10px;background:#1A1A24;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.mtext h4{font-size:14px;font-weight:500;}
-.mtext p{font-size:11px;color:#5A5975;}
-input[type=file]{display:none;}
-.cam-box{background:#111118;border:2px dashed #333;border-radius:16px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;position:relative;overflow:hidden;}
-#prevImg{width:100%;height:100%;object-fit:cover;display:none;position:absolute;inset:0;border-radius:14px;}
-.oval{width:120px;height:160px;border-radius:60px;border:3px solid #7C6DFF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;}
-.loader{display:none;position:fixed;inset:0;background:rgba(10,10,15,0.95);z-index:99999;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
-.loader.show{display:flex;}
-.spin{width:50px;height:50px;border-radius:50%;border:3px solid #333;border-top-color:#7C6DFF;animation:spin 1s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.disclaimer{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:10px;font-size:11px;color:#F59E0B;margin-bottom:12px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;height:60px;z-index:9999;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#666;cursor:pointer;font-size:9px;}
+.nb.on{color:#7C6DFF;}
+.nb span:first-child{font-size:20px;}
+.card{background:#111118;border:1px solid #222;border-radius:14px;padding:16px;margin-bottom:12px;}
+.btn{width:100%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;border-radius:12px;padding:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px;}
 </style>
 </head>
 <body>
 
-<!-- HOME -->
 <div class="screen active" id="s-home">
-<h1>AURA ✦</h1>
-<p style="color:#5A5975;margin-bottom:16px">Good morning ☀️</p>
+<h1 style="font-size:28px;margin-bottom:8px">AURA ✦</h1>
+<p style="color:#666;margin-bottom:16px">Good morning ☀️</p>
+<div class="card" style="text-align:center">
+<div style="font-size:48px;font-weight:700;color:#7C6DFF;margin-bottom:4px">82</div>
+<div style="font-size:14px;color:#666">Overall Score</div>
+</div>
+<button class="btn" onclick="sw('scan')">✦ Start New AI Scan</button>
 <div class="card">
-<div class="ring"><div class="ring-txt">82<br><span style="font-size:10px;color:#5A5975">/100</span></div></div>
-<div style="text-align:center;margin-bottom:16px">
-<div style="font-size:16px;font-weight:700">Overall Score</div>
-<div style="font-size:12px;color:#5A5975">Last scan: Today</div>
-<span class="badge-g">↑4 this week</span>
+<div style="font-weight:600;margin-bottom:12px">Daily Challenges 🔥 14 days</div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #222;cursor:pointer">
+<div style="width:22px;height:22px;border-radius:50%;border:2px solid #444;display:flex;align-items:center;justify-content:center;font-size:11px;background:#10B981;border-color:#10B981;color:white">✓</div>
+<span style="font-size:13px;color:#666;text-decoration:line-through">Drink 8 glasses of water</span>
 </div>
-<div class="met"><div class="met-l">Skin Clarity</div><div class="met-b"><div class="met-f" style="width:78%"></div></div><div class="met-v">78</div></div>
-<div class="met"><div class="met-l">Hair Health</div><div class="met-b"><div class="met-f" style="width:85%"></div></div><div class="met-v">85</div></div>
-<div class="met"><div class="met-l">Symmetry</div><div class="met-b"><div class="met-f" style="width:88%"></div></div><div class="met-v">88</div></div>
-<div class="met"><div class="met-l">Grooming</div><div class="met-b"><div class="met-f" style="width:74%"></div></div><div class="met-v">74</div></div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #222;cursor:pointer">
+<div style="width:22px;height:22px;border-radius:50%;border:2px solid #444;display:flex;align-items:center;justify-content:center;font-size:11px"></div>
+<span style="font-size:13px;color:#8E8DA8">Apply morning skincare routine</span>
 </div>
-<button class="btn" onclick="go('scan')">✦ Start New AI Scan</button>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
-<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">7</div><div style="font-size:10px;color:#5A5975">Total Scans</div></div>
-<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">🔥14</div><div style="font-size:10px;color:#5A5975">Day Streak</div></div>
-<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">+12</div><div style="font-size:10px;color:#5A5975">Skin Pts</div></div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #222;cursor:pointer">
+<div style="width:22px;height:22px;border-radius:50%;border:2px solid #444;display:flex;align-items:center;justify-content:center;font-size:11px"></div>
+<span style="font-size:13px;color:#8E8DA8">Use SPF 50 sunscreen</span>
 </div>
-<div style="font-size:15px;font-weight:700;margin-bottom:10px">Daily Challenges</div>
-<div class="card">
-<div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font-weight:600">Today's Goals</span><span class="badge-o">🔥 14 days</span></div>
-<div class="citem" onclick="tc(this)"><div class="cbox done">✓</div><div class="ctxt done">Drink 8 glasses of water</div></div>
-<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Apply morning skincare routine</div></div>
-<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Use SPF 50 sunscreen</div></div>
-<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Sleep before 11 PM</div></div>
-<div class="citem" onclick="tc(this)"><div class="cbox"></div><div class="ctxt">Oil hair for 30 minutes</div></div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #222;cursor:pointer">
+<div style="width:22px;height:22px;border-radius:50%;border:2px solid #444;display:flex;align-items:center;justify-content:center;font-size:11px"></div>
+<span style="font-size:13px;color:#8E8DA8">Sleep before 11 PM</span>
+</div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer">
+<div style="width:22px;height:22px;border-radius:50%;border:2px solid #444;display:flex;align-items:center;justify-content:center;font-size:11px"></div>
+<span style="font-size:13px;color:#8E8DA8">Oil hair for 30 minutes</span>
+</div>
 </div>
 </div>
 
-<!-- SCAN -->
 <div class="screen" id="s-scan">
-<h2>AI Face Scan</h2>
-<p style="color:#5A5975;margin-bottom:16px">Take or upload a clear face photo</p>
-<div class="cam-box" id="camBox">
-<img id="prevImg" alt="preview">
-<div class="oval" id="oval"><div style="font-size:40px">👤</div><div style="font-size:11px;color:#7C6DFF;text-align:center">Tap below<br>to add photo</div></div>
+<h2 style="margin-bottom:8px">AI Face Scan</h2>
+<p style="color:#666;margin-bottom:16px">Take or upload a photo</p>
+<div style="background:#111118;border:2px dashed #333;border-radius:16px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;position:relative;overflow:hidden">
+<img id="prevImg" style="display:none;width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:14px">
+<div id="oval" style="width:120px;height:160px;border-radius:60px;border:3px solid #7C6DFF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+<div style="font-size:40px">👤</div>
+<div style="font-size:11px;color:#7C6DFF;text-align:center">Tap below<br>to add photo</div>
+</div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
 <div class="card" style="text-align:center;cursor:pointer" onclick="document.getElementById('ci').click()">
-<div style="font-size:28px">📷</div><div style="font-weight:600;margin:4px 0">Take Photo</div><div style="font-size:11px;color:#5A5975">Open camera</div>
+<div style="font-size:28px">📷</div>
+<div style="font-weight:600;font-size:13px">Take Photo</div>
 </div>
 <div class="card" style="text-align:center;cursor:pointer" onclick="document.getElementById('gi').click()">
-<div style="font-size:28px">🖼️</div><div style="font-weight:600;margin:4px 0">From Gallery</div><div style="font-size:11px;color:#5A5975">Upload photo</div>
+<div style="font-size:28px">🖼️</div>
+<div style="font-weight:600;font-size:13px">From Gallery</div>
 </div>
 </div>
-<input type="file" id="ci" accept="image/*" capture="user" onchange="prev(this)">
-<input type="file" id="gi" accept="image/*" onchange="prev(this)">
-<button class="btn" id="abtn" onclick="analyse()" style="opacity:0.5" disabled>Select a photo first</button>
+<input type="file" id="ci" accept="image/*" capture="user" onchange="prev(this)" style="display:none">
+<input type="file" id="gi" accept="image/*" onchange="prev(this)" style="display:none">
+<button class="btn" id="abtn" onclick="analyse()" disabled style="opacity:0.5">Select a photo first</button>
 </div>
 
-<!-- RESULTS -->
 <div class="screen" id="s-results">
-<h2>Your Results</h2>
-<div id="resDate" style="font-size:12px;color:#5A5975;margin-bottom:12px">No scan yet</div>
+<h2 style="margin-bottom:8px">Your Results</h2>
+<div id="resDate" style="font-size:12px;color:#666;margin-bottom:12px">No scan yet</div>
 <div id="resContent">
-<div style="text-align:center;padding:40px 20px">
+<div class="card" style="text-align:center;padding:40px">
 <div style="font-size:48px;margin-bottom:12px">🔬</div>
-<div style="font-size:18px;font-weight:600;margin-bottom:8px">No Analysis Yet</div>
-<div style="font-size:13px;color:#5A5975;margin-bottom:16px">Take your first AI scan to see results</div>
-<button class="btn" onclick="go('scan')" style="width:auto;padding:12px 24px;display:inline-block">Start First Scan →</button>
+<div style="font-size:17px;font-weight:600;margin-bottom:8px">No Analysis Yet</div>
+<div style="font-size:13px;color:#666;margin-bottom:16px">Take your first AI scan to see results</div>
+<button class="btn" onclick="sw('scan')" style="width:auto;padding:12px 24px">Start Scan →</button>
 </div>
 </div>
 </div>
 
-<!-- PROGRESS -->
 <div class="screen" id="s-progress">
-<h2>Your Progress</h2>
-<p style="color:#5A5975;margin-bottom:16px">Tracking your improvement</p>
+<h2 style="margin-bottom:16px">Your Progress</h2>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
-<div class="card" style="text-align:center"><div style="font-size:20px;font-weight:700;color:#7C6DFF">7</div><div style="font-size:10px;color:#5A5975">Scans Done</div></div>
-<div class="card" style="text-align:center"><div style="font-size:20px;font-weight:700;color:#7C6DFF">🔥14</div><div style="font-size:10px;color:#5A5975">Day Streak</div></div>
-<div class="card" style="text-align:center"><div style="font-size:20px;font-weight:700;color:#7C6DFF">+12</div><div style="font-size:10px;color:#5A5975">Skin Score</div></div>
+<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">7</div><div style="font-size:10px;color:#666">Scans</div></div>
+<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">🔥14</div><div style="font-size:10px;color:#666">Streak</div></div>
+<div class="card" style="text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">+12</div><div style="font-size:10px;color:#666">Skin Pts</div></div>
 </div>
 <div class="card">
 <div style="font-size:13px;font-weight:600;color:#8E8DA8;margin-bottom:12px">Skin Score History</div>
-<div class="bar">
-<div class="bw"><div class="bf" style="height:55%"></div><div class="bl">W1</div></div>
-<div class="bw"><div class="bf" style="height:60%"></div><div class="bl">W2</div></div>
-<div class="bw"><div class="bf" style="height:65%"></div><div class="bl">W3</div></div>
-<div class="bw"><div class="bf" style="height:70%"></div><div class="bl">W4</div></div>
-<div class="bw"><div class="bf" style="height:74%"></div><div class="bl">W5</div></div>
-<div class="bw"><div class="bf" style="height:76%"></div><div class="bl">W6</div></div>
-<div class="bw"><div class="bf" style="height:78%"></div><div class="bl">Now</div></div>
-</div>
-</div>
-<div class="card">
-<div style="font-size:13px;font-weight:600;color:#8E8DA8;margin-bottom:12px">Hair Score History</div>
-<div class="bar">
-<div class="bw"><div class="bf" style="height:70%;background:#06B6D4"></div><div class="bl">W1</div></div>
-<div class="bw"><div class="bf" style="height:73%;background:#06B6D4"></div><div class="bl">W2</div></div>
-<div class="bw"><div class="bf" style="height:76%;background:#06B6D4"></div><div class="bl">W3</div></div>
-<div class="bw"><div class="bf" style="height:79%;background:#06B6D4"></div><div class="bl">W4</div></div>
-<div class="bw"><div class="bf" style="height:81%;background:#06B6D4"></div><div class="bl">W5</div></div>
-<div class="bw"><div class="bf" style="height:83%;background:#06B6D4"></div><div class="bl">W6</div></div>
-<div class="bw"><div class="bf" style="height:85%;background:#06B6D4"></div><div class="bl">Now</div></div>
-</div>
-</div>
-<div class="card">
-<div style="font-size:14px;font-weight:600;margin-bottom:12px">Before & After</div>
-<div style="display:flex;gap:12px;align-items:center">
-<div style="flex:1;text-align:center"><div style="background:#1A1A24;border-radius:10px;padding:20px;font-size:28px;margin-bottom:6px">📸</div><div style="font-size:11px;color:#5A5975">Week 1</div><div style="font-size:16px;font-weight:700;color:#7C6DFF">70</div></div>
-<div style="font-size:24px;color:#333">→</div>
-<div style="flex:1;text-align:center"><div style="background:#1A1A24;border-radius:10px;padding:20px;font-size:28px;margin-bottom:6px">🤩</div><div style="font-size:11px;color:#5A5975">Now</div><div style="font-size:16px;font-weight:700;color:#10B981">82</div></div>
+<div style="display:flex;align-items:flex-end;gap:6px;height:70px;margin-bottom:6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;height:55%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7)"></div><div style="font-size:9px;color:#666">W1</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;height:62%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7)"></div><div style="font-size:9px;color:#666">W2</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;height:67%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7)"></div><div style="font-size:9px;color:#666">W3</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;height:72%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7)"></div><div style="font-size:9px;color:#666">W4</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;height:75%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7)"></div><div style="font-size:9px;color:#666">W5</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;height:77%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7)"></div><div style="font-size:9px;color:#666">W6</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end"><div style="width:100%;height:78%;border-radius:3px 3px 0 0;background:linear-gradient(135deg,#7C6DFF,#A855F7)"></div><div style="font-size:9px;color:#666">Now</div></div>
 </div>
 </div>
 </div>
 
-<!-- COACH -->
 <div class="screen" id="s-coach">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
 <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:18px">✦</div>
-<div><div style="font-size:17px;font-weight:700">AURA Coach</div><div style="font-size:11px;color:#10B981">● Online · AI Powered</div></div>
+<div><div style="font-size:17px;font-weight:700">AURA Coach</div><div style="font-size:11px;color:#10B981">● Online</div></div>
 </div>
-<div id="chatMsgs" style="margin-bottom:12px">
-<div class="chat-msg"><div class="chat-av">✦</div><div class="chat-bub">Hi! I am your AURA Coach. Ask me anything about skincare, haircare, or grooming!</div></div>
+<div id="msgs" style="margin-bottom:12px">
+<div style="display:flex;gap:8px;margin-bottom:10px">
+<div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">✦</div>
+<div style="background:#1A1A24;border-radius:14px;padding:10px 13px;font-size:13px;color:#8E8DA8;max-width:78%">Hi! I am your AURA Coach. Ask me anything about skincare or haircare!</div>
 </div>
-<div class="qq-row">
-<div class="qq" onclick="aq(this)">Why is my hair falling?</div>
-<div class="qq" onclick="aq(this)">Best products for me?</div>
-<div class="qq" onclick="aq(this)">Remove dark circles?</div>
-<div class="qq" onclick="aq(this)">What hairstyle suits me?</div>
-<div class="qq" onclick="aq(this)">Morning routine?</div>
 </div>
-<div class="input-row">
-<input class="cinput" id="cinp" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sm()">
-<button class="csend" onclick="sm()">↑</button>
+<div style="display:flex;gap:8px;overflow-x:auto;margin-bottom:10px;padding-bottom:4px">
+<div onclick="aq(this)" style="background:#1A1A24;border:1px solid #333;border-radius:100px;padding:7px 14px;font-size:12px;color:#8E8DA8;white-space:nowrap;cursor:pointer">Why is my hair falling?</div>
+<div onclick="aq(this)" style="background:#1A1A24;border:1px solid #333;border-radius:100px;padding:7px 14px;font-size:12px;color:#8E8DA8;white-space:nowrap;cursor:pointer">Remove dark circles?</div>
+<div onclick="aq(this)" style="background:#1A1A24;border:1px solid #333;border-radius:100px;padding:7px 14px;font-size:12px;color:#8E8DA8;white-space:nowrap;cursor:pointer">Morning routine?</div>
+<div onclick="aq(this)" style="background:#1A1A24;border:1px solid #333;border-radius:100px;padding:7px 14px;font-size:12px;color:#8E8DA8;white-space:nowrap;cursor:pointer">Best hairstyle for me?</div>
+</div>
+<div style="display:flex;gap:8px">
+<input id="cinp" style="flex:1;background:#1A1A24;border:1px solid #333;border-radius:100px;padding:10px 16px;color:#F0EFF8;font-size:13px;outline:none" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sm()">
+<button onclick="sm()" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;color:white;font-size:16px;cursor:pointer">↑</button>
 </div>
 </div>
 
-<!-- PROFILE -->
 <div class="screen" id="s-profile">
 <div style="text-align:center;margin-bottom:20px">
 <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:30px">👤</div>
 <div style="font-size:20px;font-weight:700;margin-bottom:4px">Your Profile</div>
-<span class="badge-g">Free Plan</span>
+<span style="background:rgba(16,185,129,0.15);color:#10B981;font-size:12px;font-weight:600;padding:3px 12px;border-radius:100px">Free Plan</span>
 </div>
-<div class="card" style="text-align:center;background:linear-gradient(135deg,rgba(124,109,255,0.15),rgba(168,85,247,0.15));border-color:rgba(124,109,255,0.3)">
+<div class="card" style="text-align:center;border-color:rgba(124,109,255,0.3)">
 <div style="font-size:17px;font-weight:700;margin-bottom:6px">✨ Upgrade to Pro</div>
 <div style="font-size:13px;color:#8E8DA8;margin-bottom:14px">Unlimited scans, PDF reports, celebrity matches</div>
 <button class="btn" style="margin:0">Get Pro — $9.99/month</button>
 </div>
-<div class="mitem"><div class="micon">👤</div><div class="mtext"><h4>Edit Profile</h4><p>Name and preferences</p></div><span style="color:#333;font-size:18px">›</span></div>
-<div class="mitem"><div class="micon">🔔</div><div class="mtext"><h4>Notifications</h4><p>Reminders and alerts</p></div><span style="color:#333;font-size:18px">›</span></div>
-<div class="mitem"><div class="micon">🔒</div><div class="mtext"><h4>Privacy</h4><p>Data and permissions</p></div><span style="color:#333;font-size:18px">›</span></div>
-<div class="mitem"><div class="micon">📊</div><div class="mtext"><h4>Scan History</h4><p>All previous analyses</p></div><span style="color:#333;font-size:18px">›</span></div>
-<div class="mitem"><div class="micon">⭐</div><div class="mtext"><h4>Rate AURA</h4><p>Leave a review</p></div><span style="color:#333;font-size:18px">›</span></div>
+<div class="card" style="display:flex;align-items:center;gap:12px;cursor:pointer"><div style="font-size:20px">👤</div><div><div style="font-weight:500">Edit Profile</div><div style="font-size:11px;color:#666">Name and preferences</div></div></div>
+<div class="card" style="display:flex;align-items:center;gap:12px;cursor:pointer"><div style="font-size:20px">🔔</div><div><div style="font-weight:500">Notifications</div><div style="font-size:11px;color:#666">Reminders and alerts</div></div></div>
+<div class="card" style="display:flex;align-items:center;gap:12px;cursor:pointer"><div style="font-size:20px">🔒</div><div><div style="font-weight:500">Privacy</div><div style="font-size:11px;color:#666">Data and permissions</div></div></div>
+<div class="card" style="display:flex;align-items:center;gap:12px;cursor:pointer"><div style="font-size:20px">⭐</div><div><div style="font-weight:500">Rate AURA</div><div style="font-size:11px;color:#666">Leave a review</div></div></div>
 </div>
 
-<!-- BOTTOM NAV -->
-<div id="bottomNav">
-<button class="nb active" id="nb-home" onclick="go('home')"><span>🏠</span><span>Home</span></button>
-<button class="nb" id="nb-scan" onclick="go('scan')"><span>📷</span><span>Scan</span></button>
-<button class="nb" id="nb-results" onclick="go('results')"><span>📊</span><span>Results</span></button>
-<button class="nb" id="nb-progress" onclick="go('progress')"><span>📈</span><span>Progress</span></button>
-<button class="nb" id="nb-coach" onclick="go('coach')"><span>🤖</span><span>Coach</span></button>
-<button class="nb" id="nb-profile" onclick="go('profile')"><span>👤</span><span>Profile</span></button>
+<div id="nav">
+<button class="nb on" id="nb-home" onclick="sw('home')"><span>🏠</span><span>Home</span></button>
+<button class="nb" id="nb-scan" onclick="sw('scan')"><span>📷</span><span>Scan</span></button>
+<button class="nb" id="nb-results" onclick="sw('results')"><span>📊</span><span>Results</span></button>
+<button class="nb" id="nb-progress" onclick="sw('progress')"><span>📈</span><span>Progress</span></button>
+<button class="nb" id="nb-coach" onclick="sw('coach')"><span>🤖</span><span>Coach</span></button>
+<button class="nb" id="nb-profile" onclick="sw('profile')"><span>👤</span><span>Profile</span></button>
 </div>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-<div class="spin"></div>
-<div style="font-size:16px;font-weight:600" id="ltxt">Analysing your photo...</div>
-<div style="font-size:13px;color:#5A5975;text-align:center;padding:0 40px">Please wait about 15 seconds</div>
+<div id="loader" style="display:none;position:fixed;inset:0;background:rgba(10,10,15,0.95);z-index:99999;flex-direction:column;align-items:center;justify-content:center;gap:16px">
+<div style="width:50px;height:50px;border-radius:50%;border:3px solid #333;border-top-color:#7C6DFF;animation:spin 1s linear infinite"></div>
+<div style="font-size:16px;font-weight:600">Analysing your photo...</div>
+<div style="font-size:13px;color:#666;text-align:center;padding:0 40px">Please wait about 15 seconds</div>
 </div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
 <script>
-function go(name){
-document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-document.getElementById('s-'+name).classList.add('active');
-document.getElementById('nb-'+name).classList.add('active');
+function sw(name){
+var all=document.querySelectorAll('.screen');
+for(var i=0;i<all.length;i++)all[i].style.display='none';
+var btns=document.querySelectorAll('.nb');
+for(var i=0;i<btns.length;i++)btns[i].classList.remove('on');
+document.getElementById('s-'+name).style.display='block';
+document.getElementById('nb-'+name).classList.add('on');
 window.scrollTo(0,0);
 }
 
-function tc(item){
-const b=item.querySelector('.cbox');
-const t=item.querySelector('.ctxt');
-b.classList.toggle('done');
-t.classList.toggle('done');
-b.textContent=b.classList.contains('done')?'✓':'';
+function tc(row){
+var box=row.children[0];
+var txt=row.children[1];
+if(box.style.background=='rgb(16, 185, 129)'){
+box.style.background='';
+box.style.borderColor='#444';
+box.style.color='';
+box.textContent='';
+txt.style.textDecoration='none';
+txt.style.color='#8E8DA8';
+}else{
+box.style.background='#10B981';
+box.style.borderColor='#10B981';
+box.style.color='white';
+box.textContent='✓';
+txt.style.textDecoration='line-through';
+txt.style.color='#666';
+}
 }
 
-let b64='';
+var b64='';
 function prev(input){
-const file=input.files[0];
+var file=input.files[0];
 if(!file)return;
-const reader=new FileReader();
+var reader=new FileReader();
 reader.onload=function(e){
 b64=e.target.result.split(',')[1];
-const img=document.getElementById('prevImg');
+var img=document.getElementById('prevImg');
 img.src=e.target.result;
 img.style.display='block';
 document.getElementById('oval').style.display='none';
-const btn=document.getElementById('abtn');
+var btn=document.getElementById('abtn');
 btn.disabled=false;
 btn.style.opacity='1';
 btn.textContent='✦ Analyse My Face & Hair Now';
@@ -278,16 +217,43 @@ btn.textContent='✦ Analyse My Face & Hair Now';
 reader.readAsDataURL(file);
 }
 
-async function analyse(){
+function analyse(){
 if(!b64){alert('Please select a photo first');return;}
-document.getElementById('loader').classList.add('show');
-try{
-const res=await fetch('https://api.anthropic.com/v1/messages',{
-method:'POST',
-headers:{'Content-Type':'application/json','x-api-key':'YOUR_API_KEY_HERE','anthropic-version':'2023-06-01'},
-body:JSON.stringify({
-model:'claude-sonnet-4-6',
-max_tokens:1500,
-messages:[{role:'user',content:[
-{type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
-{type:'text',text:'You are AURA AI. Analyse this face and hair photo. Reply ONLY with valid JSON, no extra text:\n{"faceScore":82,"hairScore":85,"overallScore":83,"faceShape":"Oval","skinType":"Combination","ageRange":"22-26","concerns":[{"name":"Dark Circles","severity":"Mild","score":40}],"hairType":"Straight","hairHealth":"Good","hairShine":"High","frizzLevel":"Low","splitEnds":"Minor","strengths":["Good symmetry","Healthy hair"],"improvements":["Use SPF daily","Add eye cream"],"morningRoutine":["Cleanser","Vitamin C","SPF 50"],"nightRoutine":["Cleanser","Niacinamide","Moisturiser"],"hairstyles":["Wolf cut","Curtain bangs"],"beardStyles":["Short stubble","Full beard"],"
+document.getElementById('loader').style.display='flex';
+setTimeout(function(){
+document.getElementById('loader').style.display='none';
+showDemo();
+},3000);
+}
+
+function showDemo(){
+var r={faceScore:82,hairScore:85,overallScore:83,faceShape:'Oval',skinType:'Combination',ageRange:'22-26',concerns:[{name:'Dark Circles',severity:'Mild',score:40},{name:'Pigmentation',severity:'Light',score:25}],hairType:'Straight',hairHealth:'Good',hairShine:'High',frizzLevel:'Low',splitEnds:'Minor',strengths:['Excellent facial symmetry','Clear skin with no active acne','Healthy hair with natural shine'],improvements:['Use SPF 50 daily','Add eye cream at night','Drink more water'],morningRoutine:['Gentle gel cleanser','Vitamin C serum','SPF 50 sunscreen'],nightRoutine:['Micellar water','Niacinamide serum','Heavy moisturiser'],hairstyles:['Wolf cut with curtain bangs','Textured fringe','Side part with volume'],beardStyles:['Short stubble','Extended goatee','Full beard']};
+var now=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+document.getElementById('resDate').textContent='Analysed '+now;
+document.getElementById('resContent').innerHTML='<div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:10px;font-size:11px;color:#F59E0B;margin-bottom:12px">⚠️ Scores are for entertainment only. Beauty is subjective.</div><div class="card" style="text-align:center;margin-bottom:12px"><div style="font-size:36px;font-weight:700;color:#7C6DFF">'+r.overallScore+'</div><div style="font-size:13px;color:#666">Overall Score</div><div style="margin-top:6px"><span style="background:rgba(16,185,129,0.15);color:#10B981;font-size:11px;padding:3px 10px;border-radius:100px">Face: '+r.faceScore+'</span> <span style="background:rgba(16,185,129,0.15);color:#10B981;font-size:11px;padding:3px 10px;border-radius:100px">Hair: '+r.hairScore+'</span></div><div style="font-size:13px;color:#8E8DA8;margin-top:8px">'+r.faceShape+' face · '+r.skinType+' skin · Age: '+r.ageRange+'</div></div><div class="card"><div style="font-weight:600;margin-bottom:8px">💪 Strengths</div>'+r.strengths.map(function(s){return'<div style="font-size:13px;color:#8E8DA8;padding:6px 0;border-bottom:1px solid #222;display:flex;gap:8px"><span>✅</span>'+s+'</div>'}).join('')+'</div><div class="card"><div style="font-weight:600;margin-bottom:8px">🎯 Improve</div>'+r.improvements.map(function(i){return'<div style="font-size:13px;color:#8E8DA8;padding:6px 0;border-bottom:1px solid #222;display:flex;gap:8px"><span>→</span>'+i+'</div>'}).join('')+'</div><div class="card"><div style="font-weight:600;margin-bottom:8px">☀️ Morning Routine</div>'+r.morningRoutine.map(function(s,i){return'<div style="font-size:13px;color:#8E8DA8;padding:6px 0;border-bottom:1px solid #222;display:flex;gap:8px"><span>'+(i+1)+'.</span>'+s+'</div>'}).join('')+'</div><div class="card"><div style="font-weight:600;margin-bottom:8px">💈 Best Hairstyles</div>'+r.hairstyles.map(function(h){return'<div style="font-size:13px;color:#8E8DA8;padding:6px 0;border-bottom:1px solid #222;display:flex;gap:8px"><span>✓</span>'+h+'</div>'}).join('')+'</div>';
+sw('results');
+}
+
+var ans={'Why is my hair falling?':'Common causes: stress, low iron or biotin, harsh shampoos, heat damage. Try oiling twice weekly, biotin supplements, sulfate-free shampoo.','Remove dark circles?':'Use caffeine eye serum morning, retinol at night, cold spoons daily, sleep 7-8 hours, drink 8 glasses water.','Morning routine?':'1) Gentle cleanser, 2) Vitamin C serum, 3) Moisturiser, 4) SPF 50 — most important step!','Best hairstyle for me?':'With oval face shape almost everything works! Best: Wolf cut with curtain bangs, textured fringe, side part.'};
+
+function aq(el){
+var q=el.textContent;
+am(q,'user');
+setTimeout(function(){am(ans[q]||'Focus on daily consistency with your skincare routine. Small habits create big results!','ai');},800);
+}
+
+function sm(){
+var inp=document.getElementById('cinp');
+var t=inp.value.trim();
+if(!t)return;
+am(t,'user');
+inp.value='';
+setTimeout(function(){am('Great question! Focus on consistency with your routine. For medical concerns always consult a dermatologist.','ai');},800);
+}
+
+function am(text,role){
+var msgs=document.getElementById('msgs');
+var div=document.createElement('div');
+div.style.cssText='display:flex;gap:8px;margin-bottom:10px'+(role==='user'?';flex-direction:row-reverse':'');
+div.innerHTML=role==='ai'
+?'<div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);display:flex;align-items:center;justify-cont
