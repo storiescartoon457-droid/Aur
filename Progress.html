@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Progress</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;padding-bottom:70px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;height:60px;z-index:9999;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#666;cursor:pointer;font-size:9px;text-decoration:none;}
+.nb.on{color:#7C6DFF;}
+.nb span:first-child{font-size:22px;}
+.card{background:#111118;border:1px solid #222;border-radius:14px;padding:16px;margin:0 16px 12px;}
+</style>
+</head>
+<body>
+
+<div style="padding:48px 16px 16px">
+<h2 style="font-size:26px;font-weight:700;margin-bottom:4px">Your Progress</h2>
+<p style="font-size:13px;color:#666">Tracking your improvement over time</p>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px;margin-bottom:12px">
+<div class="card" style="margin:0;text-align:center">
+<div style="font-size:22px;font-weight:700;color:#7C6DFF">7</div>
+<div style="font-size:10px;color:#666;margin-top:3px">Scans Done</div>
+</div>
+<div class="card" style="margin:0;text-align:center">
+<div style="font-size:22px;font-weight:700;color:#7C6DFF">🔥14</div>
+<div style="font-size:10px;color:#666;margin-top:3px">Day Streak</div>
+</div>
+<div class="card" style="margin:0;text-align:center">
+<div style="font-size:22px;font-weight:700;color:#10B981">+12</div>
+<div style="font-size:10px;color:#666;margin-top:3px">Skin Score</div>
+</div>
+</div>
+
+<div class="card">
+<div style="font-size:13px;font-weight:600;color:#8E8DA8;margin-bottom:14px">📈 Skin Score History</div>
+<div style="display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:8px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:55%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#7C6DFF,#A855F7)"></div>
+<div style="font-size:9px;color:#666">W1</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:60%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#7C6DFF,#A855F7)"></div>
+<div style="font-size:9px;color:#666">W2</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:65%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#7C6DFF,#A855F7)"></div>
+<div style="font-size:9px;color:#666">W3</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:70%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#7C6DFF,#A855F7)"></div>
+<div style="font-size:9px;color:#666">W4</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:74%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#7C6DFF,#A855F7)"></div>
+<div style="font-size:9px;color:#666">W5</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:76%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#7C6DFF,#A855F7)"></div>
+<div style="font-size:9px;color:#666">W6</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:78%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#7C6DFF,#A855F7)"></div>
+<div style="font-size:9px;color:#666">Now</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div style="font-size:13px;font-weight:600;color:#8E8DA8;margin-bottom:14px">💇 Hair Score History</div>
+<div style="display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:8px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:70%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#06B6D4,#7C6DFF)"></div>
+<div style="font-size:9px;color:#666">W1</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:73%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#06B6D4,#7C6DFF)"></div>
+<div style="font-size:9px;color:#666">W2</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:76%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#06B6D4,#7C6DFF)"></div>
+<div style="font-size:9px;color:#666">W3</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:79%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#06B6D4,#7C6DFF)"></div>
+<div style="font-size:9px;color:#666">W4</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:81%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#06B6D4,#7C6DFF)"></div>
+<div style="font-size:9px;color:#666">W5</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:83%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#06B6D4,#7C6DFF)"></div>
+<div style="font-size:9px;color:#666">W6</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end">
+<div style="width:100%;height:85%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#06B6D4,#7C6DFF)"></div>
+<div style="font-size:9px;color:#666">Now</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div style="font-size:14px;font-weight:600;margin-bottom:14px">📸 Before & After</div>
+<div style="display:flex;gap:12px;align-items:center">
+<div style="flex:1;text-align:center">
+<div style="background:#1A1A24;border-radius:12px;padding:24px;font-size:32px;margin-bottom:8px">📸</div>
+<div style="font-size:11px;color:#666;margin-bottom:4px">Week 1</div>
+<div style="font-size:18px;font-weight:700;color:#7C6DFF">70</div>
+</div>
+<div style="font-size:24px;color:#333">→</div>
+<div style="flex:1;text-align:center">
+<div style="background:#1A1A24;border-radius:12px;padding:24px;font-size:32px;margin-bottom:8px">🤩</div>
+<div style="font-size:11px;color:#666;margin-bottom:4px">Now</div>
+<div style="font-size:18px;font-weight:700;color:#10B981">82</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div style="font-size:14px;font-weight:600;margin-bottom:14px">🏆 Achievements</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #222">
+<div style="display:flex;gap:10px;align-items:center">
+<span style="font-size:24px">🔥</span>
+<div><div style="font-size:13px;font-weight:500">14 Day Streak</div><div style="font-size:11px;color:#666">Consistency champion</div></div>
+</div>
+<span style="background:rgba(245,158,11,0.15);color:#F59E0B;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px">Earned</span>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #222">
+<div style="display:flex;gap:10px;align-items:center">
+<span style="font-size:24px">📈</span>
+<div><div style="font-size:13px;font-weight:500">Skin Improver</div><div style="font-size:11px;color:#666">+12 points gained</div></div>
+</div>
+<span style="background:rgba(16,185,129,0.15);color:#10B981;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px">Earned</span>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0">
+<div style="display:flex;gap:10px;align-items:center">
+<span style="font-size:24px">💎</span>
+<div><div style="font-size:13px;font-weight:500">7 Scans Done</div><div style="font-size:11px;color:#666">Dedicated analyser</div></div>
+</div>
+<span style="background:rgba(124,109,255,0.15);color:#7C6DFF;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px">Earned</span>
+</div>
+</div>
+
+<div id="nav">
+<a class="nb" href="index.html"><span>🏠</span><span>Home</span></a>
+<a class="nb" href="scan.html"><span>📷</span><span>Scan</span></a>
+<a class="nb" href="results.html"><span>📊</span><span>Results</span></a>
+<a class="nb on" href="progress.html"><span>📈</span><span>Progress</span></a>
+<a class="nb" href="coach.html"><span>🤖</span><span>Coach</span></a>
+<a class="nb" href="profile.html"><span>👤</span><span>Profile</span></a>
+</div>
+
+</body>
+  </html>
