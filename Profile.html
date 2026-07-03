@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Profile</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;padding-bottom:70px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;height:60px;z-index:9999;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#666;cursor:pointer;font-size:9px;text-decoration:none;}
+.nb.on{color:#7C6DFF;}
+.nb span:first-child{font-size:22px;}
+.card{background:#111118;border:1px solid #222;border-radius:14px;padding:16px;margin:0 16px 12px;}
+.btn{display:block;width:100%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;border-radius:12px;padding:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;text-align:center;}
+.mitem{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#111118;border:1px solid #222;border-radius:12px;margin:0 16px 8px;cursor:pointer;}
+.mitem:active{background:#1A1A24;}
+.micon{width:36px;height:36px;border-radius:10px;background:#1A1A24;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<div style="text-align:center;padding:48px 16px 24px;background:linear-gradient(180deg,rgba(124,109,255,0.1),transparent)">
+<div style="width:75px;height:75px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:34px;border:3px solid rgba(124,109,255,0.3)">👤</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:6px">Your Profile</div>
+<span style="background:rgba(124,109,255,0.15);color:#7C6DFF;font-size:12px;font-weight:600;padding:4px 14px;border-radius:100px">Free Plan</span>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px;margin-bottom:16px">
+<div class="card" style="margin:0;text-align:center">
+<div style="font-size:22px;font-weight:700;color:#7C6DFF">7</div>
+<div style="font-size:10px;color:#666;margin-top:3px">Scans</div>
+</div>
+<div class="card" style="margin:0;text-align:center">
+<div style="font-size:22px;font-weight:700;color:#7C6DFF">82</div>
+<div style="font-size:10px;color:#666;margin-top:3px">Best Score</div>
+</div>
+<div class="card" style="margin:0;text-align:center">
+<div style="font-size:22px;font-weight:700;color:#7C6DFF">🔥14</div>
+<div style="font-size:10px;color:#666;margin-top:3px">Streak</div>
+</div>
+</div>
+
+<div class="card" style="text-align:center;background:linear-gradient(135deg,rgba(124,109,255,0.12),rgba(168,85,247,0.12));border-color:rgba(124,109,255,0.3)">
+<div style="font-size:18px;font-weight:700;margin-bottom:6px">✨ Upgrade to Pro</div>
+<div style="font-size:13px;color:#8E8DA8;margin-bottom:16px;line-height:1.5">Unlimited scans · PDF reports<br>Celebrity matches · Advanced AI</div>
+<button class="btn">Get Pro — $9.99/month</button>
+</div>
+
+<div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#666;padding:0 16px;margin-bottom:8px">ACCOUNT</div>
+
+<div class="mitem">
+<div class="micon">👤</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500">Edit Profile</div><div style="font-size:11px;color:#666;margin-top:1px">Name and preferences</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div class="mitem">
+<div class="micon">🔔</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500">Notifications</div><div style="font-size:11px;color:#666;margin-top:1px">Reminders and alerts</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div class="mitem">
+<div class="micon">🔒</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500">Privacy Settings</div><div style="font-size:11px;color:#666;margin-top:1px">Data and permissions</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div style="font-size:11px;font-weight:700;letter-spacing:1px;color:#666;padding:0 16px;margin:16px 0 8px">APP</div>
+
+<div class="mitem">
+<div class="micon">📊</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500">Scan History</div><div style="font-size:11px;color:#666;margin-top:1px">All previous analyses</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div class="mitem">
+<div class="micon">📄</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500">Export PDF Report</div><div style="font-size:11px;color:#666;margin-top:1px">Pro feature</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div class="mitem">
+<div class="micon">⭐</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500">Rate AURA</div><div style="font-size:11px;color:#666;margin-top:1px">Leave a review</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div class="mitem">
+<div class="micon">📤</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500">Share AURA</div><div style="font-size:11px;color:#666;margin-top:1px">Tell your friends</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div class="mitem" onclick="clearData()">
+<div class="micon">🗑️</div>
+<div style="flex:1"><div style="font-size:14px;font-weight:500;color:#FB7185">Delete My Data</div><div style="font-size:11px;color:#666;margin-top:1px">GDPR data removal</div></div>
+<span style="color:#333;font-size:20px">›</span>
+</div>
+
+<div style="text-align:center;padding:20px 16px">
+<div style="font-size:12px;color:#666">AURA v1.0 · Made with ❤️</div>
+<div style="font-size:11px;color:#444;margin-top:4px">Your data is private and never shared</div>
+</div>
+
+<div id="nav">
+<a class="nb" href="index.html"><span>🏠</span><span>Home</span></a>
+<a class="nb" href="scan.html"><span>📷</span><span>Scan</span></a>
+<a class="nb" href="results.html"><span>📊</span><span>Results</span></a>
+<a class="nb" href="progress.html"><span>📈</span><span>Progress</span></a>
+<a class="nb" href="coach.html"><span>🤖</span><span>Coach</span></a>
+<a class="nb on" href="profile.html"><span>👤</span><span>Profile</span></a>
+</div>
+
+<script>
+function clearData(){
+if(confirm('Delete all your AURA data? This cannot be undone.')){
+localStorage.clear();
+alert('All data deleted successfully.');
+window.location.href='index.html';
+}
+}
+</script>
+</body>
+                                     </html>
