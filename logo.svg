@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="120" fill="#0A0A0F"/>
+  
+  <!-- Diamond shape -->
+  <polygon points="256,80 380,220 256,420 132,220" fill="none" stroke="white" stroke-width="8"/>
+  
+  <!-- Diamond inner lines -->
+  <line x1="132" y1="220" x2="380" y2="220" stroke="white" stroke-width="6"/>
+  <line x1="256" y1="80" x2="132" y2="220" stroke="white" stroke-width="6"/>
+  <line x1="256" y1="80" x2="380" y2="220" stroke="white" stroke-width="6"/>
+  <line x1="256" y1="80" x2="256" y2="420" stroke="white" stroke-width="3" opacity="0.4"/>
+  <line x1="132" y1="220" x2="256" y2="420" stroke="white" stroke-width="6"/>
+  <line x1="380" y1="220" x2="256" y2="420" stroke="white" stroke-width="6"/>
+  
+  <!-- Top facets -->
+  <polygon points="256,80 340,200 256,220" fill="white" opacity="0.9"/>
+  <polygon points="256,80 172,200 256,220" fill="white" opacity="0.5"/>
+  
+  <!-- Bottom facets -->
+  <polygon points="256,420 172,240 256,220" fill="white" opacity="0.3"/>
+  <polygon points="256,420 340,240 256,220" fill="white" opacity="0.6"/>
+  
+  <!-- AURA text -->
+  <text x="256" y="480" font-family="Arial" font-size="52" font-weight="700" fill="white" text-anchor="middle" letter-spacing="12">AURA</text>
+</svg>
