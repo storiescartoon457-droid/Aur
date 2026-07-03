@@ -1,0 +1,22 @@
+{
+  "name": "AURA - AI Face & Hair Analysis",
+  "short_name": "AURA",
+  "description": "AI-powered face and hair analysis app with personalized grooming recommendations",
+  "start_url": "/Aur/",
+  "display": "standalone",
+  "background_color": "#0A0A0F",
+  "theme_color": "#7C6DFF",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/7C6DFF/ffffff?text=AURA",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/7C6DFF/ffffff?text=AURA",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
