@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Coach</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;height:60px;z-index:9999;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#666;cursor:pointer;font-size:9px;text-decoration:none;}
+.nb.on{color:#7C6DFF;}
+.nb span:first-child{font-size:22px;}
+#chatBox{position:fixed;top:0;left:0;right:0;bottom:60px;display:flex;flex-direction:column;}
+#chatHead{background:linear-gradient(180deg,rgba(124,109,255,0.1),transparent);padding:48px 16px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+#msgs{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;}
+#qqRow{display:flex;gap:8px;overflow-x:auto;padding:8px 16px;flex-shrink:0;border-top:1px solid #222;}
+#qqRow::-webkit-scrollbar{display:none;}
+.qq{background:#1A1A24;border:1px solid #333;border-radius:100px;padding:7px 14px;font-size:12px;color:#8E8DA8;white-space:nowrap;cursor:pointer;flex-shrink:0;}
+#inputRow{display:flex;gap:8px;padding:10px 16px;background:#111118;border-top:1px solid #222;flex-shrink:0;}
+#cinp{flex:1;background:#1A1A24;border:1px solid #333;border-radius:100px;padding:10px 16px;color:#F0EFF8;font-size:13px;outline:none;font-family:Arial,sans-serif;}
+#csend{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;color:white;font-size:18px;cursor:pointer;flex-shrink:0;}
+.msg{display:flex;gap:8px;}
+.msg.user{flex-direction:row-reverse;}
+.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.av.ai{background:linear-gradient(135deg,#7C6DFF,#A855F7);}
+.av.me{background:#1A1A24;border:1px solid #333;}
+.bub{max-width:78%;background:#1A1A24;border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:13px;color:#8E8DA8;line-height:1.5;}
+.msg.user .bub{background:rgba(124,109,255,0.2);border-radius:16px 16px 4px 16px;color:#F0EFF8;}
+</style>
+</head>
+<body>
+
+<div id="chatBox">
+<div id="chatHead">
+<div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#7C6DFF,#A855F7);display:flex;align-items:center;justify-content:center;font-size:18px">✦</div>
+<div>
+<div style="font-size:17px;font-weight:700">AURA Coach</div>
+<div style="font-size:11px;color:#10B981">● Online · AI Powered</div>
+</div>
+</div>
+
+<div id="msgs">
+<div class="msg">
+<div class="av ai">✦</div>
+<div class="bub">Hi! I am your personal AURA Coach. I know your face and hair analysis and can help you with skincare, haircare, grooming tips, and product recommendations. What would you like to know?</div>
+</div>
+<div class="msg">
+<div class="av ai">✦</div>
+<div class="bub">Try tapping one of the quick questions below or type your own question!</div>
+</div>
+</div>
+
+<div id="qqRow">
+<div class="qq" onclick="aq(this)">Why is my hair falling?</div>
+<div class="qq" onclick="aq(this)">Best products for me?</div>
+<div class="qq" onclick="aq(this)">How to remove dark circles?</div>
+<div class="qq" onclick="aq(this)">What hairstyle suits me?</div>
+<div class="qq" onclick="aq(this)">Morning routine steps?</div>
+<div class="qq" onclick="aq(this)">How to reduce acne?</div>
+<div class="qq" onclick="aq(this)">Best beard style for me?</div>
+<div class="qq" onclick="aq(this)">How to grow hair faster?</div>
+</div>
+
+<div id="inputRow">
+<input id="cinp" placeholder="Ask anything about your face or hair..." onkeydown="if(event.key==='Enter')sm()">
+<button id="csend" onclick="sm()">↑</button>
+</div>
+</div>
+
+<div id="nav">
+<a class="nb" href="index.html"><span>🏠</span><span>Home</span></a>
+<a class="nb" href="scan.html"><span>📷</span><span>Scan</span></a>
+<a class="nb" href="results.html"><span>📊</span><span>Results</span></a>
+<a class="nb" href="progress.html"><span>📈</span><span>Progress</span></a>
+<a class="nb on" href="coach.html"><span>🤖</span><span>Coach</span></a>
+<a class="nb" href="profile.html"><span>👤</span><span>Profile</span></a>
+</div>
+
+<script>
+var answers={
+'Why is my hair falling?':'Hair fall has many causes: stress, low iron or zinc, poor diet, harsh shampoos, or heat damage. Based on your AURA analysis your scalp is healthy. Try: 1) Oiling twice weekly with coconut or onion oil, 2) Taking biotin supplement, 3) Using sulfate-free shampoo, 4) Avoiding tight hairstyles. If hair fall continues for more than 3 months, see a dermatologist.',
+'Best products for me?':'For your combination skin: CeraVe Foaming Cleanser (morning), The Ordinary Vitamin C 23% (morning), Neutrogena Hydro Boost moisturiser, Altruist SPF 50 (must!). For your hair: Maui Moisture sulfate-free shampoo, Schwarzkopf Gliss conditioner, Moroccan argan oil for tips. All budget-friendly options!',
+'How to remove dark circles?':'For your mild dark circles: 1) Caffeine eye serum every morning — reduces puffiness fast, 2) Retinol 0.1% eye cream at night — thickens skin over time, 3) Cold spoons or cucumber slices for 10 minutes daily, 4) Sleep 7-8 hours BEFORE midnight — most important, 5) Drink 8 glasses of water daily. Visible results in 4-6 weeks of consistency.',
+'What hairstyle suits me?':'With your oval face shape you are very lucky — almost everything works! Top recommendations: 1) Wolf cut with curtain bangs — very trendy and suits your straight hair, 2) Textured fringe with layers — adds dimension, 3) Side part with volume on top — classic and sharp, 4) Classic crew cut — clean and professional. Ask your barber for a wolf cut!',
+'Morning routine steps?':'Your perfect morning routine: 1) Splash face with cold water, 2) Gentle gel cleanser — massage 60 seconds, 3) Vitamin C serum — 2-3 drops, tap gently, 4) Lightweight moisturiser — small amount, 5) SPF 50 sunscreen — most important step, never skip! Total time: under 5 minutes. Do this every single morning for best results.',
+'How to reduce acne?':'To reduce and prevent acne: 1) Never sleep without washing face, 2) Use salicylic acid 2% cleanser, 3) Apply niacinamide serum — reduces oil and pores, 4) Never pop pimples — causes scars, 5) Change pillowcase every 3 days, 6) Never touch your face during the day, 7) Drink more water and reduce sugar. For severe acne, see a dermatologist for prescription treatment.',
+'Best beard style for me?':'With your oval face shape and medium beard density, these styles suit you best: 1) Short stubble — your current look works great, clean and low maintenance, 2) Extended goatee — adds length and definition, 3) Full medium beard — very masculine, trim every 2 weeks, 4) Clean shave also looks excellent with your bone structure. Keep beard lines clean always.',
+'How to grow hair faster?':'To grow hair faster: 1) Scalp massage with onion oil or rosemary oil 3x weekly — boosts blood flow, 2) Take biotin 5000mcg daily, 3) Eat protein-rich foods — eggs, chicken, lentils, 4) Avoid heat styling — no hairdryer or straightener, 5) Trim split ends every 6-8 weeks, 6) Sleep on silk pillowcase to reduce breakage. Expect 1-1.5cm growth per month.'
+};
+
+function aq(el){
+var q=el.textContent;
+addMsg(q,'user');
+var btn=el;
+btn.style.opacity='0.5';
+setTimeout(function(){
+btn.style.opacity='1';
+addMsg(answers[q]||'Great question! Based on your AURA analysis, focus on daily consistency with your skincare and haircare routine. Small daily habits create big visible changes over 4-6 weeks. Would you like me to create a specific plan for you?','ai');
+},800);
+}
+
+function sm(){
+var inp=document.getElementById('cinp');
+var t=inp.value.trim();
+if(!t)return;
+addMsg(t,'user');
+inp.value='';
+setTimeout(function(){
+addMsg('Based on your AURA face and hair analysis, I recommend focusing on consistency with your daily routine. For "'+t+'" — the most important things are: staying hydrated, using SPF daily, and oiling your hair weekly. For specific medical concerns always consult a qualified dermatologist or trichologist.','ai');
+},900);
+}
+
+function addMsg(text,role){
+var msgs=document.getElementById('msgs');
+var div=document.createElement('div');
+div.className='msg'+(role==='user'?' user':'');
+div.innerHTML=role==='ai'
+?'<div class="av ai">✦</div><div class="bub">'+text+'</div>'
+:'<div class="av me">👤</div><div class="bub">'+text+'</div>';
+msgs.appendChild(div);
+msgs.scrollTop=msgs.scrollHeight;
+}
+</script>
+</body>
+  </html>
