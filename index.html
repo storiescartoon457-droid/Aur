@@ -2,77 +2,146 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="manifest" href="manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json">
-<title>AURA</title>
+<meta name="theme-color" content="#0A0A0F">
+<title>AURA — AI Beauty Coach</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;padding-bottom:70px;}
-#nav{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #333;display:flex;height:60px;z-index:9999;}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#666;cursor:pointer;font-size:9px;text-decoration:none;}
-.nb.on{color:#7C6DFF;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#0A0A0F;border-top:1px solid #222;display:flex;height:60px;z-index:9999;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:#444;cursor:pointer;font-size:9px;text-decoration:none;}
+.nb.on{color:#fff;}
 .nb span:first-child{font-size:22px;}
 .card{background:#111118;border:1px solid #222;border-radius:14px;padding:16px;margin:0 16px 12px;}
-.btn{display:block;width:calc(100% - 32px);margin:0 16px 12px;background:linear-gradient(135deg,#7C6DFF,#A855F7);border:none;border-radius:12px;padding:14px;color:white;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;}
+.btn{display:block;width:calc(100% - 32px);margin:0 16px 12px;background:white;border:none;border-radius:12px;padding:14px;color:#0A0A0F;font-size:15px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;}
+.btn:active{opacity:0.85;}
 </style>
 </head>
 <body>
 
-<div style="background:linear-gradient(180deg,rgba(124,109,255,0.12),transparent);padding:48px 16px 20px">
-<p style="color:#666;font-size:13px">Good morning ☀️</p>
-<h1 style="font-size:30px;font-weight:700">AURA ✦</h1>
-</div>
-
-<div class="card" style="text-align:center">
-<div style="font-size:48px;font-weight:700;color:#7C6DFF">82</div>
-<div style="font-size:14px;color:#666;margin-bottom:8px">Overall Score</div>
-<span style="background:rgba(16,185,129,0.15);color:#10B981;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px">↑4 this week</span>
-<div style="margin-top:14px">
-<div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px"><span>Skin Clarity</span><span>78</span></div>
-<div style="height:5px;background:#222;border-radius:3px;margin-bottom:8px"><div style="width:78%;height:100%;border-radius:3px;background:linear-gradient(135deg,#7C6DFF,#06B6D4)"></div></div>
-<div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px"><span>Hair Health</span><span>85</span></div>
-<div style="height:5px;background:#222;border-radius:3px;margin-bottom:8px"><div style="width:85%;height:100%;border-radius:3px;background:linear-gradient(135deg,#7C6DFF,#06B6D4)"></div></div>
-<div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px"><span>Symmetry</span><span>88</span></div>
-<div style="height:5px;background:#222;border-radius:3px;margin-bottom:8px"><div style="width:88%;height:100%;border-radius:3px;background:linear-gradient(135deg,#7C6DFF,#06B6D4)"></div></div>
+<!-- HEADER -->
+<div style="padding:48px 16px 24px;background:linear-gradient(180deg,rgba(255,255,255,0.05),transparent)">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">
+<img src="logo.svg" style="width:40px;height:40px;border-radius:10px">
+<div>
+<div style="font-size:22px;font-weight:700;letter-spacing:2px">AURA</div>
+<div style="font-size:11px;color:#666;letter-spacing:1px">AI BEAUTY COACH</div>
 </div>
 </div>
-
-<a href="scan.html" class="btn">✦ Start New AI Scan</a>
-
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px;margin-bottom:12px">
-<div class="card" style="margin:0;text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">7</div><div style="font-size:10px;color:#666">Scans</div></div>
-<div class="card" style="margin:0;text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">🔥14</div><div style="font-size:10px;color:#666">Streak</div></div>
-<div class="card" style="margin:0;text-align:center"><div style="font-size:22px;font-weight:700;color:#7C6DFF">+12</div><div style="font-size:10px;color:#666">Skin Pts</div></div>
+<div style="font-size:13px;color:#555;margin-top:8px">Good morning ☀️</div>
 </div>
 
-<div style="font-size:15px;font-weight:700;padding:0 16px;margin-bottom:10px">Daily Challenges</div>
+<!-- SCORE CARD -->
 <div class="card">
-<div style="display:flex;justify-content:space-between;margin-bottom:12px">
-<span style="font-weight:600">Today's Goals</span>
-<span style="background:rgba(245,158,11,0.15);color:#F59E0B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px">🔥 14 days</span>
+<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+<div style="width:72px;height:72px;border-radius:50%;border:3px solid white;display:flex;align-items:center;justify-content:center;flex-direction:column;flex-shrink:0">
+<div style="font-size:20px;font-weight:700">82</div>
+<div style="font-size:9px;color:#666">/100</div>
 </div>
-<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #222;cursor:pointer">
-<div style="width:24px;height:24px;border-radius:50%;background:#10B981;display:flex;align-items:center;justify-content:center;font-size:12px;color:white;flex-shrink:0">✓</div>
-<span style="font-size:13px;color:#666;text-decoration:line-through">Drink 8 glasses of water</span>
+<div>
+<div style="font-size:16px;font-weight:700;margin-bottom:2px">Overall Score</div>
+<div style="font-size:12px;color:#666;margin-bottom:6px">Last scan: Today</div>
+<span style="background:rgba(255,255,255,0.1);color:white;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;border:1px solid #333">↑4 this week</span>
 </div>
-<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #222;cursor:pointer">
-<div style="width:24px;height:24px;border-radius:50%;border:2px solid #444;flex-shrink:0"></div>
-<span style="font-size:13px;color:#8E8DA8">Apply morning skincare routine</span>
 </div>
-<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #222;cursor:pointer">
-<div style="width:24px;height:24px;border-radius:50%;border:2px solid #444;flex-shrink:0"></div>
-<span style="font-size:13px;color:#8E8DA8">Use SPF 50 sunscreen</span>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div>
+<div style="font-size:10px;color:#555;margin-bottom:3px">Skin Clarity</div>
+<div style="height:4px;background:#222;border-radius:2px"><div style="width:78%;height:100%;border-radius:2px;background:white"></div></div>
+<div style="font-size:10px;color:#888;text-align:right;margin-top:2px">78</div>
 </div>
-<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #222;cursor:pointer">
-<div style="width:24px;height:24px;border-radius:50%;border:2px solid #444;flex-shrink:0"></div>
-<span style="font-size:13px;color:#8E8DA8">Sleep before 11 PM</span>
+<div>
+<div style="font-size:10px;color:#555;margin-bottom:3px">Hair Health</div>
+<div style="height:4px;background:#222;border-radius:2px"><div style="width:85%;height:100%;border-radius:2px;background:white"></div></div>
+<div style="font-size:10px;color:#888;text-align:right;margin-top:2px">85</div>
 </div>
-<div onclick="tc(this)" style="display:flex;align-items:center;gap:10px;padding:9px 0;cursor:pointer">
-<div style="width:24px;height:24px;border-radius:50%;border:2px solid #444;flex-shrink:0"></div>
-<span style="font-size:13px;color:#8E8DA8">Oil hair for 30 minutes</span>
+<div>
+<div style="font-size:10px;color:#555;margin-bottom:3px">Symmetry</div>
+<div style="height:4px;background:#222;border-radius:2px"><div style="width:88%;height:100%;border-radius:2px;background:white"></div></div>
+<div style="font-size:10px;color:#888;text-align:right;margin-top:2px">88</div>
+</div>
+<div>
+<div style="font-size:10px;color:#555;margin-bottom:3px">Grooming</div>
+<div style="height:4px;background:#222;border-radius:2px"><div style="width:74%;height:100%;border-radius:2px;background:white"></div></div>
+<div style="font-size:10px;color:#888;text-align:right;margin-top:2px">74</div>
+</div>
 </div>
 </div>
 
+<a href="scan.html" class="btn">◆ Start New AI Scan</a>
+
+<!-- QUICK STATS -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px;margin-bottom:12px">
+<div class="card" style="margin:0;text-align:center;padding:14px">
+<div style="font-size:22px;font-weight:700">7</div>
+<div style="font-size:10px;color:#555;margin-top:2px">Scans</div>
+</div>
+<div class="card" style="margin:0;text-align:center;padding:14px">
+<div style="font-size:22px;font-weight:700">🔥14</div>
+<div style="font-size:10px;color:#555;margin-top:2px">Streak</div>
+</div>
+<div class="card" style="margin:0;text-align:center;padding:14px">
+<div style="font-size:22px;font-weight:700">+12</div>
+<div style="font-size:10px;color:#555;margin-top:2px">Skin Pts</div>
+</div>
+</div>
+
+<!-- DAILY CHALLENGES -->
+<div style="font-size:13px;font-weight:700;padding:0 16px;margin-bottom:10px;letter-spacing:1px;color:#888">DAILY CHALLENGES</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+<span style="font-weight:600;font-size:14px">Today's Goals</span>
+<span style="background:#1A1A1A;color:#F59E0B;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;border:1px solid #333">🔥 14 days</span>
+</div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1A1A1A;cursor:pointer">
+<div style="width:24px;height:24px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-size:12px;color:black;font-weight:700;flex-shrink:0">✓</div>
+<span style="font-size:13px;color:#444;text-decoration:line-through">Drink 8 glasses of water</span>
+</div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1A1A1A;cursor:pointer">
+<div style="width:24px;height:24px;border-radius:50%;border:2px solid #333;flex-shrink:0"></div>
+<span style="font-size:13px;color:#888">Apply morning skincare routine</span>
+</div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1A1A1A;cursor:pointer">
+<div style="width:24px;height:24px;border-radius:50%;border:2px solid #333;flex-shrink:0"></div>
+<span style="font-size:13px;color:#888">Use SPF 50 sunscreen</span>
+</div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1A1A1A;cursor:pointer">
+<div style="width:24px;height:24px;border-radius:50%;border:2px solid #333;flex-shrink:0"></div>
+<span style="font-size:13px;color:#888">Sleep before 11 PM</span>
+</div>
+<div onclick="tc(this)" style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer">
+<div style="width:24px;height:24px;border-radius:50%;border:2px solid #333;flex-shrink:0"></div>
+<span style="font-size:13px;color:#888">Oil hair for 30 minutes</span>
+</div>
+</div>
+
+<!-- FEATURES -->
+<div style="font-size:13px;font-weight:700;padding:0 16px;margin-bottom:10px;letter-spacing:1px;color:#888">QUICK ACCESS</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px;margin-bottom:12px">
+<a href="scan.html" class="card" style="margin:0;text-align:center;text-decoration:none;color:white;padding:20px 16px">
+<div style="font-size:28px;margin-bottom:8px">📷</div>
+<div style="font-size:13px;font-weight:600;margin-bottom:2px">New Scan</div>
+<div style="font-size:11px;color:#555">Analyse face & hair</div>
+</a>
+<a href="results.html" class="card" style="margin:0;text-align:center;text-decoration:none;color:white;padding:20px 16px">
+<div style="font-size:28px;margin-bottom:8px">📊</div>
+<div style="font-size:13px;font-weight:600;margin-bottom:2px">My Results</div>
+<div style="font-size:11px;color:#555">View analysis</div>
+</a>
+<a href="coach.html" class="card" style="margin:0;text-align:center;text-decoration:none;color:white;padding:20px 16px">
+<div style="font-size:28px;margin-bottom:8px">🤖</div>
+<div style="font-size:13px;font-weight:600;margin-bottom:2px">AI Coach</div>
+<div style="font-size:11px;color:#555">Ask anything</div>
+</a>
+<a href="progress.html" class="card" style="margin:0;text-align:center;text-decoration:none;color:white;padding:20px 16px">
+<div style="font-size:28px;margin-bottom:8px">📈</div>
+<div style="font-size:13px;font-weight:600;margin-bottom:2px">Progress</div>
+<div style="font-size:11px;color:#555">Track improvement</div>
+</a>
+</div>
+
+<!-- BOTTOM NAV -->
 <div id="nav">
 <a class="nb on" href="index.html"><span>🏠</span><span>Home</span></a>
 <a class="nb" href="scan.html"><span>📷</span><span>Scan</span></a>
@@ -86,19 +155,21 @@ body{background:#0A0A0F;color:#F0EFF8;font-family:Arial,sans-serif;padding-botto
 function tc(row){
 var box=row.children[0];
 var txt=row.children[1];
-if(box.style.background==='rgb(16, 185, 129)'){
+if(box.style.background==='white'){
 box.style.background='';
-box.style.border='2px solid #444';
+box.style.border='2px solid #333';
 box.textContent='';
+box.style.color='';
 txt.style.textDecoration='none';
-txt.style.color='#8E8DA8';
+txt.style.color='#888';
 }else{
-box.style.background='#10B981';
+box.style.background='white';
 box.style.border='none';
 box.textContent='✓';
-box.style.color='white';
+box.style.color='black';
+box.style.fontWeight='700';
 txt.style.textDecoration='line-through';
-txt.style.color='#666';
+txt.style.color='#444';
 }
 }
 </script>
